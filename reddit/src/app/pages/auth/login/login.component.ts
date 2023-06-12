@@ -50,6 +50,7 @@ export class LoginComponent implements OnInit{
     this.authSvc.signIn(this.newUserData)
       .subscribe(res => {
         console.log(res);
+        this.authSvc.tokenAutoRefresh();
         /* this.router.navigate(['./auth/login']); */
       })
     /* this.handleErrorMessage(); */

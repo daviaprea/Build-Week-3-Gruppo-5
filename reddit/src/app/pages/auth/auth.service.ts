@@ -1,4 +1,4 @@
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { JwtHelperService } from '@auth0/angular-jwt';
 import { BehaviorSubject, map, tap } from 'rxjs';
@@ -54,5 +54,19 @@ export class AuthService {
   {
     localStorage.removeItem('user');
     this.authSubject.next(null);
+  }
+
+  tokenAutoRefresh()
+  {
+    const headers = new HttpHeaders({'content-Type': 'application/x-www-form-urlencoded'});
+    const options = { headers: headers };
+
+    const user: IAccData = JSON.parse(localStorage.getItem('user')!);
+    const expDate = this.jwtHelper.getTokenExpirationDate(user.idToken) as Date;
+    const timeLeft=expDate.getTime()-new Date().getTime();
+    setTimeout(()=>{
+      this.http.post(environment.refreshUrl, 'grant_type=refresh_token&refresh_token='+user.refreshToken, options)
+      .subscribe(data=>console.log(data));
+    }, 1000);
   }
 }
