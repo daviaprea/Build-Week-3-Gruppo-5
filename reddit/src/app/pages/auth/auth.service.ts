@@ -4,6 +4,7 @@ import { JwtHelperService } from '@auth0/angular-jwt';
 import { BehaviorSubject, map, tap } from 'rxjs';
 import { IAccData } from 'src/app/models/interfaces/i-acc-data';
 import { ILogin } from 'src/app/models/interfaces/i-login';
+import { IRefreshUser } from 'src/app/models/interfaces/i-refresh-user';
 import { IRegister } from 'src/app/models/interfaces/i-register';
 import { environment } from 'src/environments/environment.development';
 
@@ -65,8 +66,13 @@ export class AuthService {
     const expDate = this.jwtHelper.getTokenExpirationDate(user.idToken) as Date;
     const timeLeft=expDate.getTime()-new Date().getTime();
     setTimeout(()=>{
-      this.http.post(environment.refreshUrl, 'grant_type=refresh_token&refresh_token='+user.refreshToken, options)
-      .subscribe(data=>console.log(data));
+      this.http.post<IRefreshUser>(environment.refreshUrl, 'grant_type=refresh_token&refresh_token='+user.refreshToken, options)
+      .subscribe(data=>{
+        console.log(data);
+        user.idToken=data.id_token;
+        localStorage.setItem("user", JSON.stringify(user));
+        this.authSubject.next(user);
+      });
     }, 1000);
   }
 }
