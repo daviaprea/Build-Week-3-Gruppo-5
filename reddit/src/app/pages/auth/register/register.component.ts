@@ -41,12 +41,14 @@ export class RegisterComponent implements OnInit {
     this.formRegister = this.fb.group({
       email: ['', [Validators.required, Validators.email]],
       password: ['', Validators.required],
-      nickname: ['', Validators.required]
+      nickname: ['', Validators.required],
+      returnSecureToken: true
     });
   }
 
   register() {
     this.newUserData = this.formRegister.value;
+    console.log(this.newUserData);
     this.authSvc.signUp(this.newUserData)
       .subscribe(res => {
         console.log(res);
