@@ -5,3 +5,31 @@ body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
 
 /* Importing Bootstrap SCSS file. */
 @import 'bootstrap/scss/bootstrap';
+
+.darkMode {
+  .mat-toolbar {
+    background-color: rgb(50, 44, 53);
+  }
+  .mat-drawer-container {
+    background: linear-gradient(180deg, rgba(9,71,106,1) 1%, rgba(14,66,96,1) 2%, rgba(0,0,0,1) 86%);
+    color: #fff;
+  }
+  mat-drawer{
+    box-shadow: 1px 1px 2px;
+    background: linear-gradient(180deg, rgba(9,71,106,1) 1%, rgba(14,66,96,1) 2%, rgba(0,0,0,1) 86%);
+  }
+  .buttonSide {
+    background-color: rgb(50, 44, 53);
+    color: #fff;
+  }
+  mat-card {
+    background-color: rgb(50, 44, 53);
+    mat-card-subtitle{
+      color: rgb(149, 149, 149);
+    }
+  }
+  .like, .save {
+    color: #fff;
+  }
+}
+

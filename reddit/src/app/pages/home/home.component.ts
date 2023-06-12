@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, ElementRef, ViewChild } from '@angular/core';
 
 @Component({
   selector: 'app-home',
@@ -7,4 +7,13 @@ import { Component } from '@angular/core';
 })
 export class HomeComponent {
 
+  saved: boolean = false;
+
+  savePost():void{
+    if (!this.saved) {
+      this.saved = true;
+    } else {
+      this.saved = false;
+    }
+  }
 }
