@@ -4,6 +4,8 @@ import { Component, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { MatSlideToggleChange } from '@angular/material/slide-toggle';
 import { LoginComponent } from '../auth/login/login.component';
+import { HomeService } from '../home.service';
+import { IRegister } from 'src/app/models/interfaces/i-register';
 
 @Component({
   selector: 'app-nav',
@@ -17,10 +19,15 @@ export class NavComponent implements OnInit {
   dropDown = <HTMLElement>document.querySelector('.dropDown');
   isLoggedIn:boolean = true;
 
+  loggedUserIcon:string | null = null;
+
   constructor(
     public dialog: MatDialog,
-    private authSvc: AuthService
-    ) {}
+    private authSvc: AuthService,
+    private homeSvc: HomeService
+    ) {
+
+    }
 
   openDialog(): void {
       const dialogRef = this.dialog.open(LoginComponent, {})
@@ -38,6 +45,12 @@ export class NavComponent implements OnInit {
       this.darkMode = false;
       this.dark.classList.remove('darkMode');
     }
+    this.homeSvc.findLoggedUser();
+    this.homeSvc.sharedProfile.subscribe((user) => {
+      if(user){
+        this.loggedUserIcon = user.profilePic;
+      }
+    })
   }
 
   toggleDarkMode(event: MatSlideToggleChange):void{

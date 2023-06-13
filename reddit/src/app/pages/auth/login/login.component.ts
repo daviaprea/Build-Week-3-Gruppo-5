@@ -7,6 +7,7 @@ import { ILogin } from 'src/app/models/interfaces/i-login';
 import { MatDialog } from '@angular/material/dialog';
 import { MatDialogRef } from '@angular/material/dialog';
 import { RegisterComponent } from '../register/register.component';
+import { HomeService } from '../../home.service';
 
 @Component({
   selector: 'app-login',
@@ -43,7 +44,8 @@ export class LoginComponent implements OnInit{
     private router: Router,
     private fb: FormBuilder,
     public dialog: MatDialog,
-    public dialogRef: MatDialogRef<LoginComponent>
+    public dialogRef: MatDialogRef<LoginComponent>,
+    private homeSvc: HomeService
     ){ }
 
 
@@ -67,19 +69,21 @@ export class LoginComponent implements OnInit{
         console.log(res.email);
         this.authSvc.signInForUserInfos(res).subscribe(res => {
           console.log('dentro il subscribe', res);
-
+          this.homeSvc.findLoggedUser();
+          this.router.navigate(['profile']);
         })
         this.authSvc.tokenAutoRefresh();
         this.closeRef();
-        /* this.router.navigate(['./auth/login']); */
       })
-    this.handleErrorMessage();
-
+      this.handleErrorMessage();
+      /* window.location.reload(); */
+    /* this.homeSvc.findLoggedUser(); */
   }
 
   redirect(){
     this.authSvc.isRegistered.next(false);
     const dialogRef = this.dialog.open(RegisterComponent, {});
+    /* this.closeRef(); */
   }
 
   handleErrorMessage() {

@@ -75,12 +75,12 @@ export class AuthService {
   signInForUserInfos(data:IAccData){
     return this.http.get<IRegister[]>(environment.usersUrl).pipe(
       tap(users => {
-
         const arrayUsers = [];
+        /* const arrayUsers = Array.from(users); */
         for(let user in users){
           const singleObj = users[user]
-          /* console.log(singleObj);
-          console.log(user); */
+          console.log(singleObj);
+          console.log(user);
           if(singleObj.id){
             arrayUsers.push(singleObj);
           }

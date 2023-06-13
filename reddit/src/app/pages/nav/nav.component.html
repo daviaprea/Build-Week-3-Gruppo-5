@@ -14,7 +14,10 @@
   <div class="d-flex align-items-center">
     <button mat-raised-button class="mx-1"><mat-icon>get_app</mat-icon>Download App</button>
     <button mat-raised-button color="warn" class="mx-1" (click)="openDialog()">Accesso</button>
-    <button mat-icon-button class="dropDown" [matMenuTriggerFor]="beforeMenu"><mat-icon>account_circle</mat-icon></button>
+    <button mat-icon-button class="dropDown" [matMenuTriggerFor]="beforeMenu" class="d-flex align-items-center justify-content-center">
+      <mat-icon  *ngIf="!loggedUserIcon">account_circle</mat-icon>
+      <img id="pic" [src]="loggedUserIcon" alt="placeholder" *ngIf="loggedUserIcon">
+    </button>
     <mat-menu class="d-flex flex-column align-items-end" #beforeMenu="matMenu" xPosition="before">
       <div class="d-flex align-items-center">
         <mat-icon *ngIf="!darkMode" class="me-2">light_mode</mat-icon>
