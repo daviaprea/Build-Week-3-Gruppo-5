@@ -4,7 +4,9 @@ import { Router } from '@angular/router';
 import { AuthService } from '../auth.service';
 import { trigger, transition, style, animate } from '@angular/animations';
 import { ILogin } from 'src/app/models/interfaces/i-login';
+import { MatDialog } from '@angular/material/dialog';
 import { MatDialogRef } from '@angular/material/dialog';
+import { RegisterComponent } from '../register/register.component';
 
 @Component({
   selector: 'app-login',

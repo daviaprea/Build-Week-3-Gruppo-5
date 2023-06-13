@@ -24,7 +24,8 @@ export class NavComponent implements OnInit {
     ) {}
 
   openDialog(): void {
-    this.authSvc.newUser$.subscribe(user => {
+
+    this.authSvc.isRegistered.subscribe(user => {
       this.isLoggedIn = user
     });
     if(this.isLoggedIn){
