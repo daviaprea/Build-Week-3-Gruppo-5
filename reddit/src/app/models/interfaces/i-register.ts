@@ -1,5 +1,5 @@
 export interface IRegister {
-  id?:number;
+  id?:string;
   email:string;
   password?:string;
   nickname:string;

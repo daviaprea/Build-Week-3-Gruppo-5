@@ -62,17 +62,24 @@ export class RegisterComponent implements OnInit {
     this.authSvc.signUp(this.newUserData)
       .subscribe(res => {
         console.log(res);
+        this.authSvc.localIdSubject.next(res.localId)
         /* this.router.navigate(['./auth/login']); */
         this.closeRef();
       })
       this.handleErrorMessage();
 
     this.newUserData.savedPosts = [];
-    delete this.newUserData.password;
-    this.authSvc.signUpForUserInfos(this.newUserData)
-    .subscribe(res => {
-      console.log("🚀 ~ file: register.component.ts:75 ~ RegisterComponent ~ register ~ res:", res)
+    this.authSvc.localId$.subscribe(res => {
+      this.newUserData.id = res;
+      console.log(res);
+      console.log(this.newUserData.id);
+      this.authSvc.signUpForUserInfos(this.newUserData)
+      .subscribe(res => {
+        console.log("🚀 ~ file: register.component.ts:75 ~ RegisterComponent ~ register ~ res:", res)
     })
+    })
+    delete this.newUserData.password;
+
   }
 
   handleErrorMessage() {

@@ -23,7 +23,8 @@ export class AuthService {
   isRegistered:BehaviorSubject<boolean> = new BehaviorSubject<boolean>(true);
   newUser$ = this.isRegistered.asObservable();
 
-
+  localIdSubject:BehaviorSubject<string> = new BehaviorSubject<string>('');
+  localId$ = this.localIdSubject.asObservable();
 
   private errorSubject: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
   public error$ = this.errorSubject.asObservable();
@@ -80,7 +81,9 @@ export class AuthService {
           const singleObj = users[user]
           /* console.log(singleObj);
           console.log(user); */
-          arrayUsers.push(singleObj);
+          if(singleObj.id){
+            arrayUsers.push(singleObj);
+          }
         }
         console.log("tutti gli utenti", arrayUsers)
         const singleUser = arrayUsers.filter(user => user.email === data.email);
