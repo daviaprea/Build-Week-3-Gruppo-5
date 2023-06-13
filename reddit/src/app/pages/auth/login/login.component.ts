@@ -31,6 +31,8 @@ export class LoginComponent implements OnInit{
   showError: boolean = false;
   textError: string = '';
 
+  hide = true;
+
   formRegister!: FormGroup;
 
   constructor(private authSvc:AuthService, private router: Router, private fb: FormBuilder){ }
@@ -53,16 +55,16 @@ export class LoginComponent implements OnInit{
         this.authSvc.tokenAutoRefresh();
         /* this.router.navigate(['./auth/login']); */
       })
-    /* this.handleErrorMessage(); */
+    this.handleErrorMessage();
   }
 
-  /* handleErrorMessage() {
-    this.AuthService.error$.subscribe(error => {
+  handleErrorMessage() {
+    this.authSvc.error$.subscribe(error => {
       this.showError = error;
     });
-    this.AuthService.errorText$.subscribe(text => {
+    this.authSvc.errorText$.subscribe(text => {
       this.textError = text;
     })
-  } */
+  }
 
 }

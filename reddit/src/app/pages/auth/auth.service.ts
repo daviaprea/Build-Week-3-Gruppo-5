@@ -1,11 +1,12 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { JwtHelperService } from '@auth0/angular-jwt';
-import { BehaviorSubject, map, tap } from 'rxjs';
+import { BehaviorSubject, catchError, map, tap, throwError } from 'rxjs';
 import { IAccData } from 'src/app/models/interfaces/i-acc-data';
 import { ILogin } from 'src/app/models/interfaces/i-login';
 import { IRefreshUser } from 'src/app/models/interfaces/i-refresh-user';
 import { IRegister } from 'src/app/models/interfaces/i-register';
+import { IregDataRes } from 'src/app/models/interfaces/ireg-data-res';
 import { environment } from 'src/environments/environment.development';
 
 @Injectable({
@@ -19,6 +20,12 @@ export class AuthService {
   user$ = this.authSubject.asObservable();
   isLoggedIn$ = this.user$.pipe(map(dato => Boolean(dato)));
 
+  private errorSubject: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
+  public error$ = this.errorSubject.asObservable();
+  private errorTextSubject: BehaviorSubject<string> = new BehaviorSubject<string>('');
+  public errorText$ = this.errorTextSubject.asObservable();
+
+
   constructor(private http:HttpClient)
   {
     this.restoreUser();
@@ -26,7 +33,15 @@ export class AuthService {
 
   signUp(user:IRegister)
   {
-    return this.http.post(environment.regUrl, user);
+    return this.http.post<IregDataRes>(environment.regUrl, user).pipe(
+      catchError(error => {
+        console.log("🚀 ~ file: auth.service.ts:46 ~ AuthService ~ error:", error)
+        const errorText = this.errors(error);
+        this.errorSubject.next(true);
+        this.errorTextSubject.next(errorText);
+        return throwError(error);
+      })
+    )
   }
 
   signIn(user:ILogin)
@@ -36,7 +51,13 @@ export class AuthService {
       localStorage.setItem("user", JSON.stringify(data));
 
       const expDate = this.jwtHelper.getTokenExpirationDate(data.idToken) as Date;
-    }));
+    }))
+    .pipe(catchError(error => {
+      const errorText = this.errors(error);
+      this.errorSubject.next(true);
+      this.errorTextSubject.next(errorText);
+      return throwError(error);
+    }))
   }
 
   restoreUser()
@@ -74,5 +95,31 @@ export class AuthService {
         this.authSubject.next(user);
       });
     }, 1000);
+  }
+
+  errors(err: any) {
+    switch (err.error.error.message) {
+        case "MISSING_PASSWORD":
+            return 'Password is required'
+            break;
+        case "EMAIL_EXISTS":
+            return 'Email already exists'
+            break;
+        case 'INVALID_EMAIL':
+            return 'Email format is invalid'
+            break;
+        case "MISSING_EMAIL":
+          return 'Email is required'
+          break;
+        case 'EMAIL_NOT_FOUND':
+            return 'Cannot find user'
+            break;
+        case 'INVALID_PASSWORD':
+            return 'Incorrect password or email'
+            break;
+            default:
+        return 'Errore'
+            break;
+    }
   }
 }
