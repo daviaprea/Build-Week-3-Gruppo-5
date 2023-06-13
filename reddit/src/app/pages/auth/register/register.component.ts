@@ -4,6 +4,7 @@ import { Router } from '@angular/router';
 import { IRegister } from 'src/app/models/interfaces/i-register';
 import { AuthService } from '../auth.service';
 import { trigger, transition, style, animate } from '@angular/animations';
+import { MatDialogRef } from '@angular/material/dialog';
 
 @Component({
   selector: 'app-register',
@@ -34,7 +35,8 @@ export class RegisterComponent implements OnInit {
 
   formRegister!: FormGroup;
 
-  constructor(private authSvc:AuthService, private router: Router, private fb: FormBuilder){ }
+  constructor(private authSvc:AuthService, private router: Router, private fb: FormBuilder,
+    public dialogRef: MatDialogRef<RegisterComponent>){ }
 
 
   ngOnInit(): void {
@@ -46,6 +48,10 @@ export class RegisterComponent implements OnInit {
     });
   }
 
+  closeRef(): void {
+    this.dialogRef.close();
+  }
+
   register() {
     this.newUserData = this.formRegister.value;
     console.log(this.newUserData);
@@ -53,8 +59,9 @@ export class RegisterComponent implements OnInit {
       .subscribe(res => {
         console.log(res);
         /* this.router.navigate(['./auth/login']); */
+        this.closeRef();
       })
-    this.handleErrorMessage();
+      this.handleErrorMessage();
   }
 
   handleErrorMessage() {
