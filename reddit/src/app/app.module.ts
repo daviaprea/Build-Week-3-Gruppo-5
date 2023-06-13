@@ -14,6 +14,8 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { NavComponent } from './pages/nav/nav.component';
 import { LoginComponent } from './pages/auth/login/login.component';
+import { HttpClientModule } from '@angular/common/http';
+
 
 @NgModule({
   declarations: [
@@ -25,6 +27,8 @@ import { LoginComponent } from './pages/auth/login/login.component';
     BrowserModule,
     AppRoutingModule,
     BrowserAnimationsModule,
+    NgbModule,
+    HttpClientModule
     NgbModule,
     MatToolbarModule,
     MatIconModule,
