@@ -64,12 +64,17 @@ export class LoginComponent implements OnInit{
     console.log(this.newUserData);
     this.authSvc.signIn(this.newUserData)
       .subscribe(res => {
-        console.log(res);
+        console.log(res.email);
+        this.authSvc.signInForUserInfos(res).subscribe(res => {
+          console.log('dentro il subscribe', res);
+
+        })
         this.authSvc.tokenAutoRefresh();
         this.closeRef();
         /* this.router.navigate(['./auth/login']); */
       })
     this.handleErrorMessage();
+
   }
 
   redirect(){

@@ -27,6 +27,8 @@ export class RegisterComponent implements OnInit {
     email: '',
     password: '',
     nickname: '',
+    profilePic: '',
+    savedPosts: [] = [], // oggetto post
     returnSecureToken: true
   };
 
@@ -44,7 +46,9 @@ export class RegisterComponent implements OnInit {
       email: ['', [Validators.required, Validators.email]],
       password: ['', Validators.required],
       nickname: ['', Validators.required],
-      returnSecureToken: true
+      returnSecureToken: true,
+      profilePic: 'https://i.postimg.cc/cL1p7xL2/midjourney-bulissimo-placeholder-account-image-marshmallow-ee8b82e8-fc2d-495a-89de-40b54ab4308e.png',
+      savedPosts: [],
     });
   }
 
@@ -62,6 +66,13 @@ export class RegisterComponent implements OnInit {
         this.closeRef();
       })
       this.handleErrorMessage();
+
+    this.newUserData.savedPosts = [];
+    delete this.newUserData.password;
+    this.authSvc.signUpForUserInfos(this.newUserData)
+    .subscribe(res => {
+      console.log("🚀 ~ file: register.component.ts:75 ~ RegisterComponent ~ register ~ res:", res)
+    })
   }
 
   handleErrorMessage() {

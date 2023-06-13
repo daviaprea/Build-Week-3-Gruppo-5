@@ -23,6 +23,8 @@ export class AuthService {
   isRegistered:BehaviorSubject<boolean> = new BehaviorSubject<boolean>(true);
   newUser$ = this.isRegistered.asObservable();
 
+
+
   private errorSubject: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
   public error$ = this.errorSubject.asObservable();
   private errorTextSubject: BehaviorSubject<string> = new BehaviorSubject<string>('');
@@ -36,7 +38,9 @@ export class AuthService {
 
   signUp(user:IRegister)
   {
-    return this.http.post<IregDataRes>(environment.regUrl, user).pipe(
+    /* return this.http.post(environment.usersUrl, user) */
+    return this.http.post<IregDataRes>(environment.regUrl, user)
+    .pipe(
       catchError(error => {
         console.log("🚀 ~ file: auth.service.ts:46 ~ AuthService ~ error:", error)
         const errorText = this.errors(error);
@@ -45,6 +49,10 @@ export class AuthService {
         return throwError(error);
       })
     )
+  }
+
+  signUpForUserInfos(user:IRegister){
+    return this.http.post(environment.usersUrl, user)
   }
 
   signIn(user:ILogin)
@@ -63,6 +71,25 @@ export class AuthService {
     }))
   }
 
+  signInForUserInfos(data:IAccData){
+    return this.http.get<IRegister[]>(environment.usersUrl).pipe(
+      tap(users => {
+
+        const arrayUsers = [];
+        for(let user in users){
+          const singleObj = users[user]
+          /* console.log(singleObj);
+          console.log(user); */
+          arrayUsers.push(singleObj);
+        }
+        console.log("tutti gli utenti", arrayUsers)
+        const singleUser = arrayUsers.filter(user => user.email === data.email);
+        localStorage.setItem('userInfos', JSON.stringify(singleUser[0]))
+        console.log(singleUser[0]);
+      })
+    )
+  }
+
   restoreUser()
   {
     const userJson = localStorage.getItem('user');
@@ -78,6 +105,7 @@ export class AuthService {
   logout()
   {
     localStorage.removeItem('user');
+    localStorage.removeItem('userInfos');
     this.authSubject.next(null);
   }
 
