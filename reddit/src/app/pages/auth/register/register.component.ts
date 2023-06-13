@@ -54,15 +54,15 @@ export class RegisterComponent implements OnInit {
         console.log(res);
         /* this.router.navigate(['./auth/login']); */
       })
-    /* this.handleErrorMessage(); */
+    this.handleErrorMessage();
   }
 
-  /* handleErrorMessage() {
-    this.AuthService.error$.subscribe(error => {
+  handleErrorMessage() {
+    this.authSvc.error$.subscribe(error => {
       this.showError = error;
     });
-    this.AuthService.errorText$.subscribe(text => {
+    this.authSvc.errorText$.subscribe(text => {
       this.textError = text;
     })
-  } */
+  }
 }
