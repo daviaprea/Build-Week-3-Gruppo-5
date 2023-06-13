@@ -1,7 +1,10 @@
+import { AuthService } from './../auth/auth.service';
+import { BehaviorSubject } from 'rxjs';
 import { Component, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { MatSlideToggleChange } from '@angular/material/slide-toggle';
 import { LoginComponent } from '../auth/login/login.component';
+import { RegisterComponent } from '../auth/register/register.component';
 
 @Component({
   selector: 'app-nav',
@@ -13,16 +16,29 @@ export class NavComponent implements OnInit {
   darkMode = false;
   dark = <HTMLElement>document.querySelector('.dark');
   dropDown = <HTMLElement>document.querySelector('.dropDown');
+  isLoggedIn:boolean = true;
 
-  constructor(public dialog: MatDialog) {}
+  constructor(
+    public dialog: MatDialog,
+    private authSvc: AuthService
+    ) {}
 
   openDialog(): void {
-    const dialogRef = this.dialog.open(LoginComponent, {
+    this.authSvc.newUser$.subscribe(user => {
+      this.isLoggedIn = user
     });
-
-    dialogRef.afterClosed().subscribe(result => {
-      console.log('The dialog was closed');
-    });
+    if(this.isLoggedIn){
+      const dialogRef = this.dialog.open(LoginComponent, {
+      })
+      dialogRef.afterClosed().subscribe(result => {
+        console.log('The dialog was closed');
+      });
+    }else{
+      const dialogRef = this.dialog.open(RegisterComponent, {});
+      dialogRef.afterClosed().subscribe(result => {
+        console.log('The dialog was closed');
+      });
+    }
   }
 
   ngOnInit(): void {

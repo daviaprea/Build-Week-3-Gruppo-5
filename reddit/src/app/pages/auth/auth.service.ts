@@ -20,6 +20,9 @@ export class AuthService {
   user$ = this.authSubject.asObservable();
   isLoggedIn$ = this.user$.pipe(map(dato => Boolean(dato)));
 
+  isRegistered:BehaviorSubject<boolean> = new BehaviorSubject<boolean>(true);
+  newUser$ = this.isRegistered.asObservable();
+
   private errorSubject: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
   public error$ = this.errorSubject.asObservable();
   private errorTextSubject: BehaviorSubject<string> = new BehaviorSubject<string>('');
