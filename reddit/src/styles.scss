@@ -6,6 +6,21 @@ body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
 /* Importing Bootstrap SCSS file. */
 @import 'bootstrap/scss/bootstrap';
 
+::-webkit-scrollbar {
+  width: 10px;
+}
+
+
+::-webkit-scrollbar-thumb {
+  background-color: #5d5d5daa;
+  border-radius: 5px;
+}
+
+
+::-webkit-scrollbar-track {
+   display: none;
+}
+
 .darkMode {
   .mat-toolbar {
     background-color: rgb(50, 44, 53);

@@ -13,7 +13,7 @@
   </div>
   <div class="d-flex align-items-center">
     <button mat-raised-button class="mx-1"><mat-icon>get_app</mat-icon>Download App</button>
-    <button mat-raised-button color="warn" class="mx-1">Accesso</button>
+    <button mat-raised-button color="warn" class="mx-1" (click)="openDialog()">Accesso</button>
     <button mat-icon-button class="dropDown" [matMenuTriggerFor]="beforeMenu"><mat-icon>account_circle</mat-icon></button>
     <mat-menu class="d-flex flex-column align-items-end" #beforeMenu="matMenu" xPosition="before">
       <div class="d-flex align-items-center">

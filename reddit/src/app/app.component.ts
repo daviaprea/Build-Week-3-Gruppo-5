@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { MatDialog } from '@angular/material/dialog';
 
 @Component({
   selector: 'app-root',
@@ -7,4 +8,13 @@ import { Component } from '@angular/core';
 })
 export class AppComponent {
   title = 'reddit';
+}
+
+export class OpenDialog {
+
+  constructor(public dialog: MatDialog){}
+
+  openDialog():void {
+    // const dialogRef = this.dialog.open()
+  }
 }
