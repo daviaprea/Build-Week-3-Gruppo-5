@@ -42,6 +42,7 @@ export class LoginComponent implements OnInit{
     private authSvc:AuthService,
     private router: Router,
     private fb: FormBuilder,
+    public dialog: MatDialog,
     public dialogRef: MatDialogRef<LoginComponent>
     ){ }
 
@@ -73,6 +74,7 @@ export class LoginComponent implements OnInit{
 
   redirect(){
     this.authSvc.isRegistered.next(false);
+    const dialogRef = this.dialog.open(RegisterComponent, {});
   }
 
   handleErrorMessage() {

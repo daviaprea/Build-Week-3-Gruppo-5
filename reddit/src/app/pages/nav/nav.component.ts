@@ -4,7 +4,6 @@ import { Component, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { MatSlideToggleChange } from '@angular/material/slide-toggle';
 import { LoginComponent } from '../auth/login/login.component';
-import { RegisterComponent } from '../auth/register/register.component';
 
 @Component({
   selector: 'app-nav',
@@ -24,22 +23,10 @@ export class NavComponent implements OnInit {
     ) {}
 
   openDialog(): void {
-
-    this.authSvc.isRegistered.subscribe(user => {
-      this.isLoggedIn = user
-    });
-    if(this.isLoggedIn){
-      const dialogRef = this.dialog.open(LoginComponent, {
-      })
+      const dialogRef = this.dialog.open(LoginComponent, {})
       dialogRef.afterClosed().subscribe(result => {
         console.log('The dialog was closed');
       });
-    }else{
-      const dialogRef = this.dialog.open(RegisterComponent, {});
-      dialogRef.afterClosed().subscribe(result => {
-        console.log('The dialog was closed');
-      });
-    }
   }
 
   ngOnInit(): void {
