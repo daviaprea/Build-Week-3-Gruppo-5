@@ -7,6 +7,11 @@ import { MypostsComponent } from './myposts/myposts.component';
 import { NewpostComponent } from './newpost/newpost.component';
 import { SavedpostComponent } from './savedpost/savedpost.component';
 import { EditpostComponent } from './myposts/editpost/editpost.component';
+import { MatCardModule } from '@angular/material/card';
+import { MatRippleModule } from '@angular/material/core';
+import { MatIconModule } from '@angular/material/icon';
+import { MatSidenavModule } from '@angular/material/sidenav';
+import { ProfileboxComponent } from './profilebox/profilebox.component';
 
 
 @NgModule({
@@ -15,11 +20,16 @@ import { EditpostComponent } from './myposts/editpost/editpost.component';
     MypostsComponent,
     NewpostComponent,
     SavedpostComponent,
-    EditpostComponent
+    EditpostComponent,
+    ProfileboxComponent
   ],
   imports: [
     CommonModule,
-    ProfileRoutingModule
+    ProfileRoutingModule,
+    MatCardModule,
+    MatSidenavModule,
+    MatIconModule,
+    MatRippleModule,
   ]
 })
 export class ProfileModule { }
