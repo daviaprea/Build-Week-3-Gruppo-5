@@ -12,10 +12,11 @@
 
     <mat-form-field appearance="outline">
       <mat-label>eg: 1234@Qwerty</mat-label>
-      <input [type]="hide ? 'password' : 'text'" matInput formControlName="password">
-      <button mat-icon-button matSuffix (click)="hide = !hide" [attr.aria-label]="'Hide password'" [attr.aria-pressed]="hide">
+      <input type="password" matInput formControlName="password">
+      <!-- [type]="hide ? 'password' : 'text'" -->
+      <!-- <button mat-icon-button matSuffix (click)="hide = !hide" [attr.aria-label]="'Hide password'" [attr.aria-pressed]="hide">
         <mat-icon>{{hide ? 'visibility_off' : 'visibility'}}</mat-icon>
-      </button>
+      </button> -->
       <mat-hint>Password</mat-hint>
     </mat-form-field>
 

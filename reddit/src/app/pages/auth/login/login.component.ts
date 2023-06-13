@@ -31,7 +31,7 @@ export class LoginComponent implements OnInit{
   showError: boolean = false;
   textError: string = '';
 
-  hide = true;
+  /* hide = true; */
 
   formRegister!: FormGroup;
 

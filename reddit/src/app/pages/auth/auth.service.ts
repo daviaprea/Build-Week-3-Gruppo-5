@@ -86,6 +86,8 @@ export class AuthService {
     const user: IAccData = JSON.parse(localStorage.getItem('user')!);
     const expDate = this.jwtHelper.getTokenExpirationDate(user.idToken) as Date;
     const timeLeft=expDate.getTime()-new Date().getTime();
+    console.log("🚀 ~ file: auth.service.ts:89 ~ AuthService ~ timeLeft:", timeLeft)
+
     setTimeout(()=>{
       this.http.post<IRefreshUser>(environment.refreshUrl, 'grant_type=refresh_token&refresh_token='+user.refreshToken, options)
       .subscribe(data=>{
@@ -93,8 +95,9 @@ export class AuthService {
         user.idToken=data.id_token;
         localStorage.setItem("user", JSON.stringify(user));
         this.authSubject.next(user);
+        this.tokenAutoRefresh();
       });
-    }, 1000);
+    }, timeLeft);
   }
 
   errors(err: any) {
