@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ProfileService } from '../profile.service';
 import { IPost } from 'src/app/models/interfaces/i-post';
+import { IRegister } from 'src/app/models/interfaces/i-register';
 
 @Component({
   selector: 'app-newpost',
@@ -9,6 +10,8 @@ import { IPost } from 'src/app/models/interfaces/i-post';
   styleUrls: ['./newpost.component.scss']
 })
 export class NewpostComponent implements OnInit {
+
+  userLogged:IRegister=JSON.parse(localStorage.getItem("userInfos")!);
 
   base64Image: string = "";
   formRegister!: FormGroup;
@@ -20,7 +23,8 @@ export class NewpostComponent implements OnInit {
     imageUrl: '',
     videoUrl: '',
     likes: [],
-    id: ''
+    id: '',
+    user : this.userLogged
   }
 
   constructor(

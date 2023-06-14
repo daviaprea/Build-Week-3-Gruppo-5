@@ -1,0 +1,16 @@
+div#label-prof-page{
+  margin-left: 200px;
+
+}
+
+mat-card-header{
+  display: flex;
+  align-items: center;
+  padding: 8px;
+  div.header-card-img{
+    img{
+      border-radius: 50%;
+      width: 50px;
+    }
+  }
+}

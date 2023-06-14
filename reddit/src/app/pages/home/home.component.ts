@@ -46,7 +46,7 @@ export class HomeComponent implements OnInit {
       (posts) => {
         this.allDisplayablePosts = posts;
         console.log('Post recuperati', posts);
-        this.getAllComments();
+        /* this.getAllComments(); */
       },
       (error) => {
         console.log('errore nel recuperare i post', error);
