@@ -28,8 +28,9 @@ export class RegisterComponent implements OnInit {
     password: '',
     nickname: '',
     profilePic: '',
-    savedPosts: [] = [], // oggetto post
-    returnSecureToken: true
+    savedPosts: [] = [],
+    returnSecureToken: true,
+    uniqueId: ''
   };
 
   showError: boolean = false;

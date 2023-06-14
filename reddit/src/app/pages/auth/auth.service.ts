@@ -78,7 +78,8 @@ export class AuthService {
         const arrayUsers = [];
         /* const arrayUsers = Array.from(users); */
         for(let user in users){
-          const singleObj = users[user]
+          const singleObj:IRegister = users[user]
+          singleObj.uniqueId = user;
           console.log(singleObj);
           console.log(user);
           if(singleObj.id){
@@ -132,6 +133,10 @@ export class AuthService {
         this.tokenAutoRefresh();
       });
     }, timeLeft);
+  }
+
+  editUser(user:Partial<IRegister>){
+    return this.http.put(environment.editUser + user.uniqueId + '.json', user);
   }
 
   errors(err: any) {

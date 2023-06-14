@@ -6,4 +6,5 @@ export interface IRegister {
   profilePic:string;
   savedPosts:any[]; // oggetto post
   returnSecureToken:boolean;
+  uniqueId: string;
 }

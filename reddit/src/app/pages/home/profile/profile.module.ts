@@ -12,6 +12,11 @@ import { MatRippleModule } from '@angular/material/core';
 import { MatIconModule } from '@angular/material/icon';
 import { MatSidenavModule } from '@angular/material/sidenav';
 import { ProfileboxComponent } from './profilebox/profilebox.component';
+import { MatExpansionModule } from '@angular/material/expansion';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatDatepickerModule } from '@angular/material/datepicker';
+import { MatInputModule } from '@angular/material/input';
+import { FormsModule } from '@angular/forms';
 
 
 @NgModule({
@@ -30,6 +35,11 @@ import { ProfileboxComponent } from './profilebox/profilebox.component';
     MatSidenavModule,
     MatIconModule,
     MatRippleModule,
+    MatExpansionModule,
+    MatFormFieldModule,
+    MatDatepickerModule,
+    MatInputModule,
+    FormsModule
   ]
 })
 export class ProfileModule { }
