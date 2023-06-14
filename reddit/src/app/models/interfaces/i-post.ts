@@ -1,14 +1,3 @@
-/* export interface IPost {
-  id: string;
-  title:string;
-  bodyText:string;
-  createdBy_id:string;
-  imageUrl?:string;
-  videoUrl?:string;
-  postTopic:string;
-  likes: number[];
-}
- */
 import { IRegister } from "./i-register";
 
 export interface IPost {
@@ -19,6 +8,6 @@ export interface IPost {
   imageUrl?:string;
   videoUrl?:string;
   postTopic:string;
-  likes: number[];
+  likes: {[key: string]: any};
   user: IRegister
 }

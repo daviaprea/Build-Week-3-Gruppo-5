@@ -14,7 +14,7 @@ import { IPostPlusComments } from 'src/app/models/interfaces/ipost-plus-comments
 })
 export class HomeComponent implements OnInit {
   //array con tutti i post
-  allDisplayablePosts: IPost[] = [];
+  allDisplayablePosts:IPost[]=[];
   //array che si aggiorna a seconda del filtro
   filteredPosts: IPost[] = [];
   //recupero tutti i commenti per i post visualizzati
@@ -23,7 +23,7 @@ export class HomeComponent implements OnInit {
   postCommentedArray:IPostPlusComments[] = [];
   postCommented!: IPostPlusComments;
 
-
+  likes:number=0;
 
   //conterrà l'utente loggato
   userLogged: IRegister | null = null;
@@ -35,17 +35,23 @@ export class HomeComponent implements OnInit {
     //recupero info dell'utente loggato
     this.homeSvc.findLoggedUser();
     this.homeSvc.sharedProfile.subscribe((user) => {
-      if(user){
-        this.userLogged = user;
-      }
+      if(user) this.userLogged = user;
+      console.log(this.userLogged);
     })
   }
 
   getAllPostsHome(){
     this.homeSvc.getAllPosts().subscribe(
       (posts) => {
-        this.allDisplayablePosts = posts;
-        console.log('Post recuperati', posts);
+        for(let post in posts)
+        {
+          let obj:IPost=posts[post];
+          obj.id=post;
+          this.allDisplayablePosts.push(obj);
+          /* this.allDisplayablePosts[post]=posts[post]; */
+        }
+
+        console.log('Post recuperati', this.allDisplayablePosts);
         /* this.getAllComments(); */
       },
       (error) => {
@@ -56,12 +62,13 @@ export class HomeComponent implements OnInit {
 
   getAllComments(){//poi la richiamo dentro getAllPostsHome
     //array con tutti gli id dei post
-    const allPostId: string[] = this.allDisplayablePosts.map(post => post.id);
+    const allPostId: string[] = this.allDisplayablePosts.map((post) => post.id);
     //prendo tutti i commenti (dopo la risposta della chiamata)
     this.homeSvc.getAllComment().subscribe(
       (comments) => {
         //filtro i commenti che corrispondono agli id dei post
-        this.allComments = comments.filter(comment => allPostId.includes(comment.createdBy_id));
+        const commentsArr = Array.from(comments)
+        this.allComments = commentsArr.filter(comment => allPostId.includes(comment.post_id));
         //itero sui post e sui commenti per creare un oggetto unione dei due
         for (const post of this.allDisplayablePosts) {
           for (const comment of this.allComments) {
@@ -79,7 +86,21 @@ export class HomeComponent implements OnInit {
       (error) => {
         console.log('errore nel recuperare i commenti', error);
       }
-      )
+    )
+  }
+
+  like(post:IPost)
+  {
+    let user:IRegister=JSON.parse(localStorage.getItem("userInfos")!);
+    console.log(post);
+    if(post.likes.hasOwnProperty(user.uniqueId)) delete post.likes[user.uniqueId];
+    else post.likes[user.uniqueId]=user;
+    this.homeSvc.likePost(post).subscribe(res=>console.log(res));
+  }
+
+  getLikesCount(post: any): number
+  {
+    return Object.keys(post.likes).length-1;
   }
 
   filterTopic(topic:string){
