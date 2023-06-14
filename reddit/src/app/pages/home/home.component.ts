@@ -14,7 +14,7 @@ import { IPostPlusComments } from 'src/app/models/interfaces/ipost-plus-comments
 })
 export class HomeComponent implements OnInit {
   //array con tutti i post
-  allDisplayablePosts: IPost[] = [];
+  allDisplayablePosts={};
   //array che si aggiorna a seconda del filtro
   filteredPosts: IPost[] = [];
   //recupero tutti i commenti per i post visualizzati
@@ -46,11 +46,13 @@ export class HomeComponent implements OnInit {
   getAllPostsHome(){
     this.homeSvc.getAllPosts().subscribe(
       (posts) => {
-        for(let post in posts)
+        /* for(let post in posts)
         {
           let obj:IPost=posts[post];
+          obj.id=post;
           this.allDisplayablePosts.push(obj);
-        }
+          this.allDisplayablePosts[post]=posts[post];
+        } */
 
         console.log('Post recuperati', this.allDisplayablePosts);
         /* this.getAllComments(); */
@@ -92,9 +94,10 @@ export class HomeComponent implements OnInit {
 
   like(post:IPost)
   {
-    let users:IRegister=JSON.parse(localStorage.getItem("userInfos")!);
-    /* post.likes.includes()
-    this.homeSvc.likePost(post) */
+    let user:IRegister=JSON.parse(localStorage.getItem("userInfos")!);
+    if(post.likes && post.likes.includes(user)) post.likes.splice(post.likes.indexOf(user), 1);
+    else post.likes.push(user);
+    this.homeSvc.likePost(post).subscribe(res=>console.log(res));
   }
 
   filterTopic(topic:string){

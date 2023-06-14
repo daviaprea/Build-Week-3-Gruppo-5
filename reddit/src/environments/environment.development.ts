@@ -6,5 +6,6 @@ export const environment = {
   regUrl: "https://identitytoolkit.googleapis.com/v1/accounts:signUp?key=AIzaSyAFutPXX9lgXuy8EVDUNUsyhHZTMwkHl3k",
   logUrl: "https://identitytoolkit.googleapis.com/v1/accounts:signInWithPassword?key=AIzaSyAFutPXX9lgXuy8EVDUNUsyhHZTMwkHl3k",
   refreshUrl: "https://securetoken.googleapis.com/v1/token?key=AIzaSyAFutPXX9lgXuy8EVDUNUsyhHZTMwkHl3k",
-  editUser: "https://reddit-clone-6c15e-default-rtdb.europe-west1.firebasedatabase.app/users/"
+  editUser: "https://reddit-clone-6c15e-default-rtdb.europe-west1.firebasedatabase.app/users/",
+  editPost: "https://reddit-clone-6c15e-default-rtdb.europe-west1.firebasedatabase.app/posts/"
 };

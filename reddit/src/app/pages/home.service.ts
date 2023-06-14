@@ -42,9 +42,9 @@ export class HomeService {
     return this.http.delete(environment.postsUrl + '/' + id);
   }
 
-  likePost()
+  likePost(post:IPost)
   {
-
+    return this.http.put(environment.editPost+post.id+".json", post);
   }
 
   findLoggedUser(){

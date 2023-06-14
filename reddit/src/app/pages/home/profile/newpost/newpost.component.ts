@@ -22,6 +22,7 @@ export class NewpostComponent implements OnInit {
     returnSecureToken: false,
     uniqueId: ''
   };
+
   base64Image: string = "";
   formRegister!: FormGroup;
   newPost:IPost = {
@@ -31,7 +32,7 @@ export class NewpostComponent implements OnInit {
     postTopic: '',
     imageUrl: '',
     videoUrl: '',
-    likes: [],
+    likes: {},
     id: '',
     user: this.userParsed
   }
