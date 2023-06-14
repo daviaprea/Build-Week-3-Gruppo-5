@@ -6,6 +6,7 @@ import { MatSlideToggleChange } from '@angular/material/slide-toggle';
 import { LoginComponent } from '../auth/login/login.component';
 import { HomeService } from '../home.service';
 import { IRegister } from 'src/app/models/interfaces/i-register';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-nav',
@@ -24,7 +25,8 @@ export class NavComponent implements OnInit {
   constructor(
     public dialog: MatDialog,
     private authSvc: AuthService,
-    private homeSvc: HomeService
+    private homeSvc: HomeService,
+    private router: Router
     ) {
 
     }
@@ -66,5 +68,12 @@ export class NavComponent implements OnInit {
 
   stopDropDown(event: MouseEvent) {
     event.stopPropagation();
+  }
+
+  logout(){
+    this.authSvc.logout();
+    //negessario per ngIf nell'html
+    this.router.navigate(['/']);
+    window.location.reload();
   }
 }

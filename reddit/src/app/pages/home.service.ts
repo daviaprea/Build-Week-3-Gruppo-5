@@ -5,6 +5,7 @@ import { IPost } from '../models/interfaces/i-post';
 import { BehaviorSubject } from 'rxjs';
 import { IUser } from '../models/interfaces/i-user';
 import { IRegister } from '../models/interfaces/i-register';
+import { Icomment } from '../models/interfaces/icomment';
 
 @Injectable({
   providedIn: 'root'
@@ -23,6 +24,10 @@ export class HomeService {
 
   getSinglePost(id:number){
     return this.http.get<IPost>(environment.postsUrl + '/' + id);
+  }
+
+  getAllComment(){
+    return this.http.get<Icomment[]>(environment.commentsUrl);
   }
 
   addPost(post:IPost){

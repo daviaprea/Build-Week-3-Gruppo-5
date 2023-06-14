@@ -1,5 +1,5 @@
 export interface IPost {
-  id?: string;
+  id: string;
   title:string;
   bodyText:string;
   createdBy_id:string;
