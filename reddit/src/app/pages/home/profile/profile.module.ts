@@ -12,6 +12,11 @@ import { MatRippleModule } from '@angular/material/core';
 import { MatIconModule } from '@angular/material/icon';
 import { MatSidenavModule } from '@angular/material/sidenav';
 import { ProfileboxComponent } from './profilebox/profilebox.component';
+import { MatFormFieldModule, MatFormFieldControl } from '@angular/material/form-field';
+import { MatSelectModule } from '@angular/material/select';
+import { MatDialogModule } from '@angular/material/dialog';
+import { MatInputModule } from '@angular/material/input';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 
 @NgModule({
@@ -21,7 +26,7 @@ import { ProfileboxComponent } from './profilebox/profilebox.component';
     NewpostComponent,
     SavedpostComponent,
     EditpostComponent,
-    ProfileboxComponent
+    ProfileboxComponent,
   ],
   imports: [
     CommonModule,
@@ -30,6 +35,12 @@ import { ProfileboxComponent } from './profilebox/profilebox.component';
     MatSidenavModule,
     MatIconModule,
     MatRippleModule,
+    MatFormFieldModule,
+    MatSelectModule,
+    MatDialogModule,
+    MatInputModule,
+    FormsModule,
+    ReactiveFormsModule
   ]
 })
 export class ProfileModule { }

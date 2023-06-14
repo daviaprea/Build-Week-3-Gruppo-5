@@ -1,1 +1,21 @@
-<p>newpost works!</p>
+<div class="d-flex justify-content-center">
+  <form [formGroup]="formRegister" (ngSubmit)="createPost()" class="d-flex flex-column align-items-center my-5 w-50 border border-primary rounded-5">
+    <div class="d-flex">
+      <input type="text" class="form-control" formControlName="title" id="title"  placeholder="title">
+      <input type="text" class="form-control" formControlName="imageUrl" id="title"  placeholder="url">
+      <select type="select" formControlName="topic" id="topic" class="form-select form-control">
+        <option value="Gaming">Gaming</option>
+        <option value="Movies">Movies</option>
+        <option value="Cinema">Cinema</option>
+      </select>
+      </div>
+      <div class="form-floating">
+        <textarea class="form-control" formControlName="body" placeholder="Leave a comment here" id="floatingTextarea"></textarea>
+        <label for="floatingTextarea">Description</label>
+      </div>
+    <div>
+      <input type="file" formControlName="img" class="form-control" id="file" accept=".jpg, .jpeg, .png, .mp4, .avi, .mov">
+    </div>
+    <button class="btn btn-white">Crea</button>
+  </form>
+</div>

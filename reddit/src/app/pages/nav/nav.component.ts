@@ -4,6 +4,7 @@ import { Component, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { MatSlideToggleChange } from '@angular/material/slide-toggle';
 import { LoginComponent } from '../auth/login/login.component';
+import { NewpostComponent } from '../home/profile/newpost/newpost.component';
 
 @Component({
   selector: 'app-nav',
