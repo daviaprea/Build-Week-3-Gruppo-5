@@ -6,5 +6,5 @@ export interface IPost {
   imageUrl?:string;
   videoUrl?:string;
   postTopic:string;
-  likes: number[]; //array di utenti
+  likes: number[];
 }

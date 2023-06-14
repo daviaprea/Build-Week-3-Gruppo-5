@@ -15,12 +15,14 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { NavComponent } from './pages/nav/nav.component';
 import { LoginComponent } from './pages/auth/login/login.component';
 import { HttpClientModule } from '@angular/common/http';
+import { CreateComponent } from './pages/profile/create/create.component';
 
 
 @NgModule({
   declarations: [
     AppComponent,
-    NavComponent
+    NavComponent,
+    CreateComponent
   ],
   // entryComponents: [LoginComponent],
   imports: [
