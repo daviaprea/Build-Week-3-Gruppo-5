@@ -37,7 +37,7 @@
         </mat-card-content>
         <mat-card-actions class="d-flex justify-content-end">
           <span>{{getLikesCount(post)}}</span>
-          <button (click)="like(post)" class="like" mat-button>
+          <button (click)="like(post)" [ngClass]="{'like': post.likes.hasOwnProperty(userLogged!.uniqueId)}" mat-button>
             <mat-icon>thumb_up</mat-icon>
           </button>
           <button class="save" mat-button (click)="savePost()">

@@ -92,7 +92,6 @@ export class HomeComponent implements OnInit {
   like(post:IPost)
   {
     let user:IRegister=JSON.parse(localStorage.getItem("userInfos")!);
-    console.log(post);
     if(post.likes.hasOwnProperty(user.uniqueId)) delete post.likes[user.uniqueId];
     else post.likes[user.uniqueId]=user;
     this.homeSvc.likePost(post).subscribe(res=>console.log(res));
