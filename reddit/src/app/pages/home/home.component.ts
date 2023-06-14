@@ -100,8 +100,7 @@ export class HomeComponent implements OnInit {
 
   getLikesCount(post: any): number
   {
-    if (post.likes) return Object.keys(post.likes).length-1;
-    else return 0;
+    return Object.keys(post.likes).length-1;
   }
 
   filterTopic(topic:string){
