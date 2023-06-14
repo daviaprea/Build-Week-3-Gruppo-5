@@ -1,16 +1,9 @@
-<div class="card shadow" style="width: 18rem;">
-  <img src="..." class="card-img-top" alt="...">
-  <div class="card-body">
-    <h5 class="card-title">Card title</h5>
-    <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-    <a [routerLink]="['create']">New post</a>
-  </div>
-</div>
 <mat-card class="example-card">
   <mat-card-header>
     <mat-card-title-group>
       <mat-card-title>{{loggedUser.nickname}}</mat-card-title>
       <mat-card-subtitle>ID: #{{loggedUser.id}}</mat-card-subtitle>
+      <a class="btn btn-primary h-50" [routerLink]="['create']">New post</a>
       <img mat-card-md-image [src]=loggedUser.profilePic  alt="Profile Image">
     </mat-card-title-group>
   </mat-card-header>

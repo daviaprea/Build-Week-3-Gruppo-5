@@ -41,8 +41,4 @@ export class ProfileboxComponent implements OnInit{
       }
     )
   }
-
-
-  constructor(){}
-
 }
