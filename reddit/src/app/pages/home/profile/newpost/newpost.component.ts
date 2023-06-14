@@ -12,8 +12,16 @@ import { IRegister } from 'src/app/models/interfaces/i-register';
 })
 export class NewpostComponent implements OnInit {
 
-  userLogged:IRegister=JSON.parse(localStorage.getItem("userInfos")!);
+  userParsed:IRegister=JSON.parse(localStorage.getItem("userInfos")!);
 
+  userLogged: IRegister = {
+    email: '',
+    nickname: '',
+    profilePic: '',
+    savedPosts: [],
+    returnSecureToken: false,
+    uniqueId: ''
+  };
   base64Image: string = "";
   formRegister!: FormGroup;
   newPost:IPost = {
@@ -25,7 +33,7 @@ export class NewpostComponent implements OnInit {
     videoUrl: '',
     likes: [],
     id: '',
-    user: this.userLogged
+    user: this.userParsed
   }
 
   constructor(
@@ -36,16 +44,23 @@ export class NewpostComponent implements OnInit {
 
   ngOnInit(){
     this.homeSvc.findLoggedUser();
-    this.homeSvc.sharedProfile.subscribe(user=> {if(user) this.userLogged=user});
+    this.homeSvc.sharedProfile.subscribe(user=> {if(user) this.userParsed=user});
     this.formRegister = this.fb.group({
       title: ['', Validators.required],
       img: [''],
       topic: ['', Validators.required],
       body: ['', Validators.required],
     });
+    this.homeSvc.sharedProfile.subscribe((user) => {
+      if(user){
+        this.userParsed = user;
+      }
+    })
   }
 
   createPost(){
+    this.newPost.id = String(new Date().getTime()) + this.userLogged.uniqueId;
+    this.newPost.createdBy_id = this.userLogged.uniqueId;
     this.newPost.title = this.formRegister.value.title;
     this.newPost.postTopic = this.formRegister.value.topic;
     this.newPost.bodyText = this.formRegister.value.body;
