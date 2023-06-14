@@ -30,7 +30,6 @@ export class NewpostComponent implements OnInit {
   ngOnInit(){
     this.formRegister = this.fb.group({
       title: ['', Validators.required],
-      imageUrl: [''],
       img: [''],
       topic: ['', Validators.required],
       body: ['', Validators.required],
@@ -38,8 +37,11 @@ export class NewpostComponent implements OnInit {
   }
 
   createPost(){
-    this.newPost = this.formRegister.value;
+    this.newPost.title = this.formRegister.value.title;
+    this.newPost.postTopic = this.formRegister.value.topic;
+    this.newPost.bodyText = this.formRegister.value.body;
     this.newPost.imageUrl = this.base64Image;
+
     this.profileSvc.create(this.newPost).subscribe(res => {
       console.log(res);
     })
