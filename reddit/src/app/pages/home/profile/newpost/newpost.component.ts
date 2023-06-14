@@ -19,7 +19,8 @@ export class NewpostComponent implements OnInit {
     postTopic: '',
     imageUrl: '',
     videoUrl: '',
-    likes: []
+    likes: [],
+    id: ''
   }
 
   constructor(
