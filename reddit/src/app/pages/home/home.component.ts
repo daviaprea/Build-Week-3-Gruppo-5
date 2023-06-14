@@ -44,7 +44,7 @@ export class HomeComponent implements OnInit {
   getAllPostsHome(){
     this.homeSvc.getAllPosts().subscribe(
       (posts) => {
-        this.allDisplayablePosts = posts;
+        this.allDisplayablePosts = Array.from(posts);
         console.log('Post recuperati', posts);
         this.getAllComments();
       },
@@ -56,12 +56,13 @@ export class HomeComponent implements OnInit {
 
   getAllComments(){//poi la richiamo dentro getAllPostsHome
     //array con tutti gli id dei post
-    const allPostId: string[] = this.allDisplayablePosts.map(post => post.id);
+    const allPostId: string[] = this.allDisplayablePosts.map((post) => post.id);
     //prendo tutti i commenti (dopo la risposta della chiamata)
     this.homeSvc.getAllComment().subscribe(
       (comments) => {
         //filtro i commenti che corrispondono agli id dei post
-        this.allComments = comments.filter(comment => allPostId.includes(comment.createdBy_id));
+        const commentsArr = Array.from(comments)
+        this.allComments = commentsArr.filter(comment => allPostId.includes(comment.post_id));
         //itero sui post e sui commenti per creare un oggetto unione dei due
         for (const post of this.allDisplayablePosts) {
           for (const comment of this.allComments) {
