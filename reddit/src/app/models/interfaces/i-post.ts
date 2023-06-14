@@ -8,6 +8,6 @@ export interface IPost {
   imageUrl?:string;
   videoUrl?:string;
   postTopic:string;
-  likes: {};
+  likes: {[key: string]: any};
   user: IRegister
 }

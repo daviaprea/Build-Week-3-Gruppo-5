@@ -14,7 +14,7 @@ import { IPostPlusComments } from 'src/app/models/interfaces/ipost-plus-comments
 })
 export class HomeComponent implements OnInit {
   //array con tutti i post
-  allDisplayablePosts={};
+  allDisplayablePosts:IPost[]=[];
   //array che si aggiorna a seconda del filtro
   filteredPosts: IPost[] = [];
   //recupero tutti i commenti per i post visualizzati
@@ -23,7 +23,7 @@ export class HomeComponent implements OnInit {
   postCommentedArray:IPostPlusComments[] = [];
   postCommented!: IPostPlusComments;
 
-
+  likes:number=0;
 
   //conterrà l'utente loggato
   userLogged: IRegister | null = null;
@@ -35,10 +35,7 @@ export class HomeComponent implements OnInit {
     //recupero info dell'utente loggato
     this.homeSvc.findLoggedUser();
     this.homeSvc.sharedProfile.subscribe((user) => {
-      if(user){
-        this.userLogged = user;
-
-      }
+      if(user) this.userLogged = user;
       console.log(this.userLogged);
     })
   }
@@ -46,13 +43,13 @@ export class HomeComponent implements OnInit {
   getAllPostsHome(){
     this.homeSvc.getAllPosts().subscribe(
       (posts) => {
-        /* for(let post in posts)
+        for(let post in posts)
         {
           let obj:IPost=posts[post];
           obj.id=post;
           this.allDisplayablePosts.push(obj);
-          this.allDisplayablePosts[post]=posts[post];
-        } */
+          /* this.allDisplayablePosts[post]=posts[post]; */
+        }
 
         console.log('Post recuperati', this.allDisplayablePosts);
         /* this.getAllComments(); */
@@ -95,9 +92,16 @@ export class HomeComponent implements OnInit {
   like(post:IPost)
   {
     let user:IRegister=JSON.parse(localStorage.getItem("userInfos")!);
-    if(post.likes && post.likes.includes(user)) post.likes.splice(post.likes.indexOf(user), 1);
-    else post.likes.push(user);
+    console.log(post);
+    if(post.likes.hasOwnProperty(user.uniqueId)) delete post.likes[user.uniqueId];
+    else post.likes[user.uniqueId]=user;
     this.homeSvc.likePost(post).subscribe(res=>console.log(res));
+  }
+
+  getLikesCount(post: any): number
+  {
+    if (post.likes) return Object.keys(post.likes).length-1;
+    else return 0;
   }
 
   filterTopic(topic:string){

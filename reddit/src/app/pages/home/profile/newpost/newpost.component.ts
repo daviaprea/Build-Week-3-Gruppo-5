@@ -32,7 +32,7 @@ export class NewpostComponent implements OnInit {
     postTopic: '',
     imageUrl: '',
     videoUrl: '',
-    likes: {},
+    likes: {"start":0},
     id: '',
     user: this.userParsed
   }
