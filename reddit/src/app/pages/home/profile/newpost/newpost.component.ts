@@ -2,6 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ProfileService } from '../profile.service';
 import { IPost } from 'src/app/models/interfaces/i-post';
+import { HomeService } from 'src/app/pages/home.service';
+import { IRegister } from 'src/app/models/interfaces/i-register';
 
 @Component({
   selector: 'app-newpost',
@@ -9,6 +11,8 @@ import { IPost } from 'src/app/models/interfaces/i-post';
   styleUrls: ['./newpost.component.scss']
 })
 export class NewpostComponent implements OnInit {
+
+  userLogged:IRegister=JSON.parse(localStorage.getItem("userInfos")!);
 
   base64Image: string = "";
   formRegister!: FormGroup;
@@ -20,15 +24,19 @@ export class NewpostComponent implements OnInit {
     imageUrl: '',
     videoUrl: '',
     likes: [],
-    id: ''
+    id: '',
+    user: this.userLogged
   }
 
   constructor(
     private fb: FormBuilder,
-    private profileSvc: ProfileService
+    private profileSvc: ProfileService,
+    private homeSvc: HomeService
   ){}
 
   ngOnInit(){
+    this.homeSvc.findLoggedUser();
+    this.homeSvc.sharedProfile.subscribe(user=> {if(user) this.userLogged=user});
     this.formRegister = this.fb.group({
       title: ['', Validators.required],
       img: [''],
@@ -42,6 +50,7 @@ export class NewpostComponent implements OnInit {
     this.newPost.postTopic = this.formRegister.value.topic;
     this.newPost.bodyText = this.formRegister.value.body;
     this.newPost.imageUrl = this.base64Image;
+    console.log(this.newPost);
 
     this.profileSvc.create(this.newPost).subscribe(res => {
       console.log(res);

@@ -20,23 +20,20 @@
   <mat-drawer-content>
     <div class="mainContent d-flex flex-column align-items-center">
     <h1 class="title">A little bit of everything. All of the time!</h1>
-    <mat-card class="example-card w-50">
+    <mat-card *ngFor="let post of allDisplayablePosts" class="example-card w-50">
       <mat-card-header>
         <div mat-card-avatar class="example-header-image"></div>
-        <mat-card-title>Shiba Inu</mat-card-title>
-        <mat-card-subtitle>Dog Breed</mat-card-subtitle>
+        <mat-card-title>{{post.title}}</mat-card-title>
+        <mat-card-subtitle>{{post.user.nickname}}</mat-card-subtitle>
       </mat-card-header>
-      <img mat-card-image src="https://material.angular.io/assets/img/examples/shiba2.jpg" alt="Photo of a Shiba Inu">
+      <img mat-card-image src="{{post.imageUrl}}" alt="">
         <mat-card-content>
-          <p class="mt-3">Post Title</p>
-          <p class="mt-3">
-            The Shiba Inu is the smallest of the six original and distinct spitz breeds of dog from Japan.
-            A small, agile dog that copes very well with mountainous terrain, the Shiba Inu was originally
-            bred for hunting.
-          </p>
+          <p class="mt-3">{{post.postTopic}}</p>
+          <p class="mt-3">{{post.bodyText}}</p>
         </mat-card-content>
         <mat-card-actions class="d-flex justify-content-end">
-          <button class="like" mat-button>
+          <span>{{post.likes ? post.likes.length : "0"}}</span>
+          <button (click)="like(post)" class="like" mat-button>
             <mat-icon>thumb_up</mat-icon>
           </button>
           <button class="save" mat-button (click)="savePost()">

@@ -37,16 +37,23 @@ export class HomeComponent implements OnInit {
     this.homeSvc.sharedProfile.subscribe((user) => {
       if(user){
         this.userLogged = user;
+
       }
+      console.log(this.userLogged);
     })
   }
 
   getAllPostsHome(){
     this.homeSvc.getAllPosts().subscribe(
       (posts) => {
-        this.allDisplayablePosts = posts;
-        console.log('Post recuperati', posts);
-        this.getAllComments();
+        for(let post in posts)
+        {
+          let obj:IPost=posts[post];
+          this.allDisplayablePosts.push(obj);
+        }
+
+        console.log('Post recuperati', this.allDisplayablePosts);
+        /* this.getAllComments(); */
       },
       (error) => {
         console.log('errore nel recuperare i post', error);
@@ -79,7 +86,14 @@ export class HomeComponent implements OnInit {
       (error) => {
         console.log('errore nel recuperare i commenti', error);
       }
-      )
+    )
+  }
+
+  like(post:IPost)
+  {
+    let users:IRegister=JSON.parse(localStorage.getItem("userInfos")!);
+    /* post.likes.includes()
+    this.homeSvc.likePost(post) */
   }
 
   filterTopic(topic:string){

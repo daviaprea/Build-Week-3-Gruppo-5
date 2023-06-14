@@ -42,6 +42,11 @@ export class HomeService {
     return this.http.delete(environment.postsUrl + '/' + id);
   }
 
+  likePost()
+  {
+
+  }
+
   findLoggedUser(){
     const user = <string>localStorage.getItem('userInfos')
     const userObj = JSON.parse(user);

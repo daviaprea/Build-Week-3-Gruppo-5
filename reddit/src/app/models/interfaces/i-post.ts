@@ -1,3 +1,5 @@
+import { IRegister } from "./i-register";
+
 export interface IPost {
   id: string;
   title:string;
@@ -6,5 +8,6 @@ export interface IPost {
   imageUrl?:string;
   videoUrl?:string;
   postTopic:string;
-  likes: number[];
+  likes: IRegister[];
+  user: IRegister
 }
