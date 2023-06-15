@@ -23,7 +23,7 @@
   </mat-drawer>
   <mat-drawer-content>
     <div class="mainContent d-flex flex-column align-items-center">
-      <h1 class="title">A little bit of everything. All of the time!</h1>
+      <h1 class="title">Your feed</h1>
       <mat-card *ngFor="let post of allDisplayablePosts" class="example-card w-50">
         <mat-card-header>
           <div mat-card-avatar class="example-header-image"></div>
@@ -38,7 +38,8 @@
         <mat-card-actions class="d-flex justify-content-end">
           <span>{{getLikesCount(post)}}</span>
           <button (click)="like(post)" [ngClass]="{'like': post.likes.hasOwnProperty(userLogged!.uniqueId)}" mat-button>
-            <mat-icon>thumb_up</mat-icon>
+            <mat-icon *ngIf="post.likes.hasOwnProperty(userLogged!.uniqueId)">favorite</mat-icon>
+            <mat-icon *ngIf="!post.likes.hasOwnProperty(userLogged!.uniqueId)">favorite_border</mat-icon>
           </button>
           <button class="save" mat-button (click)="savePost()">
             <mat-icon *ngIf="!saved">bookmark_border</mat-icon>
