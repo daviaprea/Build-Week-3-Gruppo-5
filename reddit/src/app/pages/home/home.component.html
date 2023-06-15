@@ -34,7 +34,7 @@
       <h1 class="title">Your feed</h1>
       <mat-card *ngFor="let post of allDisplayablePosts" class="example-card w-50">
         <mat-card-header>
-          <div mat-card-avatar class="example-header-image"></div>
+          <div mat-card-avatar class="header-card-img"><img [src]=post.user.profilePic alt=""></div>
           <mat-card-title>{{post.title}}</mat-card-title>
           <mat-card-subtitle>{{post.user.nickname}}</mat-card-subtitle>
         </mat-card-header>
