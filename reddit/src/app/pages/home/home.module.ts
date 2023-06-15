@@ -4,8 +4,9 @@ import { MatCardModule } from '@angular/material/card';
 import { MatSidenavModule } from '@angular/material/sidenav';
 import { MatIconModule } from '@angular/material/icon';
 import { MatRippleModule } from '@angular/material/core';
-
-
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { NgbCollapseModule } from '@ng-bootstrap/ng-bootstrap';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 import { HomeRoutingModule } from './home-routing.module';
 import { HomeComponent } from './home.component';
@@ -22,6 +23,10 @@ import { HomeComponent } from './home.component';
     MatSidenavModule,
     MatIconModule,
     MatRippleModule,
+    MatFormFieldModule,
+    NgbCollapseModule,
+    FormsModule,
+    ReactiveFormsModule
   ]
 })
 export class HomeModule { }

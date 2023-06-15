@@ -1,6 +1,8 @@
+import { IRegister } from "./i-register";
+
 export interface Icomment {
   id?: string;
-  createdBy_id: string;
+  createdBy: IRegister;
   body: string;
   post_id: string;
 }

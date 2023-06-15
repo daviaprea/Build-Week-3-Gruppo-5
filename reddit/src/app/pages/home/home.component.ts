@@ -7,6 +7,7 @@ import { IRegister } from 'src/app/models/interfaces/i-register';
 import { Icomment } from 'src/app/models/interfaces/icomment';
 import { IPostPlusComments } from 'src/app/models/interfaces/ipost-plus-comments';
 import { Subscription } from 'rxjs';
+import { FormGroup } from '@angular/forms';
 
 @Component({
   selector: 'app-home',
@@ -23,6 +24,12 @@ export class HomeComponent implements OnInit, OnDestroy {
   //creo un array di oggetti, ogni oggetto contiene l'oggetto post + relativi commenti
   postCommentedArray:IPostPlusComments[] = [];
   postCommented!: IPostPlusComments;
+
+  isCollapsed: boolean = false;
+  formRegister!: FormGroup;
+  // newComment: Icomment = {
+
+  // }
 
   //SUBSCRIPTIONS
   private postsSubscription: Subscription | undefined;
@@ -72,6 +79,10 @@ export class HomeComponent implements OnInit, OnDestroy {
     );
   }
 
+  addComment(){
+
+  }
+
   getAllComments(){//poi la richiamo dentro getAllPostsHome
     //array con tutti gli id dei post
     const allPostId: string[] = this.allDisplayablePosts.map((post) => post.id);
@@ -84,7 +95,7 @@ export class HomeComponent implements OnInit, OnDestroy {
         //itero sui post e sui commenti per creare un oggetto unione dei due
         for (const post of this.allDisplayablePosts) {
           for (const comment of this.allComments) {
-            if (comment.createdBy_id === post.id) {
+            if (comment.createdBy.id === post.id) {
               //compilo l'oggetto combinato
               this.postCommented = {
                 post: post,
