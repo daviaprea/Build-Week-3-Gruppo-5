@@ -59,6 +59,7 @@ export class AuthService {
   signIn(user:ILogin)
   {
     return this.http.post<IAccData>(environment.logUrl, user).pipe(tap(data=>{
+      console.log("Sono nel tap del signIn: "+data)
       this.authSubject.next(data);
       localStorage.setItem("user", JSON.stringify(data));
 

@@ -34,18 +34,18 @@
       <h1 class="title">Your feed</h1>
       <mat-card *ngFor="let post of allDisplayablePosts" class="example-card w-50">
         <mat-card-header>
-          <div mat-card-avatar class="header-card-img"><img [src]=post.user.profilePic alt=""></div>
+          <div mat-card-avatar class="header-card-img"><img [src]="post.user.profilePic" alt=""></div>
           <mat-card-title>{{post.title}}</mat-card-title>
           <mat-card-subtitle>{{post.user.nickname}}</mat-card-subtitle>
         </mat-card-header>
-        <img mat-card-image src="{{post.imageUrl}}" alt="">
+        <img mat-card-image [src]="post.imageUrl" alt="">
         <mat-card-content>
           <p class="mt-3">{{post.postTopic}}</p>
           <p class="mt-3">{{post.bodyText}}</p>
         </mat-card-content>
         <mat-card-actions class="d-flex justify-content-end">
           <span>{{getLikesCount(post)}}</span>
-          <button (click)="like(post)" [ngClass]="{'like': post.likes.hasOwnProperty(userLogged!.uniqueId)}" mat-button>
+          <button *ngIf="userLogged" (click)="like(post)" [ngClass]="{'like': post.likes.hasOwnProperty(userLogged!.uniqueId)}" mat-button>
             <mat-icon *ngIf="post.likes.hasOwnProperty(userLogged!.uniqueId)">favorite</mat-icon>
             <mat-icon *ngIf="!post.likes.hasOwnProperty(userLogged!.uniqueId)">favorite_border</mat-icon>
           </button>

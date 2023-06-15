@@ -55,10 +55,10 @@ export class LoginComponent implements OnInit, OnDestroy{
     private homeSvc: HomeService
     ){ }
   ngOnDestroy(): void {
-    if(this.signIn) this.signIn.unsubscribe();
+    /* if(this.signIn) this.signIn.unsubscribe();
     if(this.userInfos) this.userInfos.unsubscribe();
     if(this.error) this.error.unsubscribe();
-    if(this.errorText) this.errorText.unsubscribe();
+    if(this.errorText) this.errorText.unsubscribe(); */
   }
 
 
@@ -77,10 +77,10 @@ export class LoginComponent implements OnInit, OnDestroy{
   login(){
     this.newUserData = this.formRegister.value;
     console.log(this.newUserData);
-    this.signIn=this.authSvc.signIn(this.newUserData)
+    this.authSvc.signIn(this.newUserData)
       .subscribe(res => {
-        console.log(res.email);
-        this.userInfos=this.authSvc.signInForUserInfos(res).subscribe(res => {
+        console.log("Sono il subscribe del signIn"+res);
+        this.authSvc.signInForUserInfos(res).subscribe(res => {
           console.log('dentro il subscribe', res);
           this.homeSvc.findLoggedUser();
           this.router.navigate(['profile']);
