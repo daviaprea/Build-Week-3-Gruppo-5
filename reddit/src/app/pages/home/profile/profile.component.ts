@@ -133,21 +133,67 @@ export class ProfileComponent implements OnInit, OnDestroy {
     );
   }
 
-  like(post:IPost)
-  {
-    let user:IRegister=JSON.parse(localStorage.getItem("userInfos")!);
-    if(post.likes.hasOwnProperty(user.uniqueId)) delete post.likes[user.uniqueId]
-    else post.likes[user.uniqueId]=user
-    this.likesSubscription = this.homeSvc.likePost(post).subscribe(res=>console.log(res));
-    this.getAllLikedPosts();
-  }
+  // like(post:IPost)
+  // {
+  //   let user:IRegister=JSON.parse(localStorage.getItem("userInfos")!);
+  //   if(post.likes.hasOwnProperty(user.uniqueId)) {
+  //     delete post.likes[user.uniqueId]
+  //     this.getAllLikedPosts();
+  //   }
+  //   else {post.likes[user.uniqueId]=user
+  //     this.getAllLikedPosts();
+  //   }
+  //   this.likesSubscription = this.homeSvc.likePost(post).subscribe(res=>console.log(res));
+  // }
 
-  saved(post:IPost)
-  {
-    let user:IRegister=JSON.parse(localStorage.getItem("userInfos")!);
-    if(post.saved.hasOwnProperty(user.uniqueId))delete post.saved[user.uniqueId]
-    else post.saved[user.uniqueId]=user
-    this.saveSubscription = this.homeSvc.savePost(post).subscribe(res=>console.log(res));
-    this.getAllSavedPosts();
-  }
+  like = async (post: IPost) => {
+    let user: IRegister = JSON.parse(localStorage.getItem("userInfos")!);
+
+    if (post.likes.hasOwnProperty(user.uniqueId)) {
+      delete post.likes[user.uniqueId];
+    } else {
+      post.likes[user.uniqueId] = user;
+    }
+
+    try {
+      await this.getAllLikedPosts();
+      await this.homeSvc.likePost(post).toPromise();
+      console.log('Post liked successfully.');
+    } catch (error) {
+      console.log('Error liking post:', error);
+    }
+  };
+
+
+  // saved(post:IPost)
+  // {
+  //   let user:IRegister=JSON.parse(localStorage.getItem("userInfos")!);
+  //   if(post.saved.hasOwnProperty(user.uniqueId)){
+  //     delete post.saved[user.uniqueId]
+  //     this.getAllSavedPosts();
+  //   }
+  //   else {
+  //     post.saved[user.uniqueId]=user
+  //     this.getAllSavedPosts();
+  //   }
+  //   this.saveSubscription = this.homeSvc.savePost(post).subscribe(res=>console.log(res));
+  // }
+
+  saved = async (post: IPost) => {
+    let user: IRegister = JSON.parse(localStorage.getItem("userInfos")!);
+
+    if (post.saved.hasOwnProperty(user.uniqueId)) {
+      delete post.saved[user.uniqueId];
+    } else {
+      post.saved[user.uniqueId] = user;
+    }
+
+    try {
+      await this.homeSvc.savePost(post).toPromise();
+      await this.getAllSavedPosts();
+      console.log('Post saved successfully.');
+    } catch (error) {
+      console.log('Error saving post:', error);
+    }
+  };
 }
