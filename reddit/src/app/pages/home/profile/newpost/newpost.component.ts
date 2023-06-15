@@ -1,16 +1,18 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ProfileService } from '../profile.service';
 import { IPost } from 'src/app/models/interfaces/i-post';
 import { HomeService } from 'src/app/pages/home.service';
 import { IRegister } from 'src/app/models/interfaces/i-register';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-newpost',
   templateUrl: './newpost.component.html',
   styleUrls: ['./newpost.component.scss']
 })
-export class NewpostComponent implements OnInit {
+export class NewpostComponent implements OnInit, OnDestroy {
+  private create: Subscription | undefined;
 
   userParsed:IRegister=JSON.parse(localStorage.getItem("userInfos")!);
 
@@ -43,6 +45,10 @@ export class NewpostComponent implements OnInit {
     private homeSvc: HomeService
   ){}
 
+  ngOnDestroy(): void {
+    if(this.create) this.create.unsubscribe();
+  }
+
   ngOnInit(){
     this.homeSvc.findLoggedUser();
     this.homeSvc.sharedProfile.subscribe(user=> {if(user) this.userParsed=user});
@@ -68,7 +74,7 @@ export class NewpostComponent implements OnInit {
     this.newPost.imageUrl = this.base64Image;
     console.log(this.newPost);
 
-    this.profileSvc.create(this.newPost).subscribe(res => {
+    this.create=this.profileSvc.create(this.newPost).subscribe(res => {
       console.log(res);
     })
   }

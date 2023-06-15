@@ -1,18 +1,18 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { MatDialogRef } from '@angular/material/dialog';
 import { NewpostComponent } from './newpost/newpost.component';
 import { HomeService } from '../../home.service';
 import { IPost } from 'src/app/models/interfaces/i-post';
 import { IRegister } from 'src/app/models/interfaces/i-register';
-import { take } from 'rxjs';
+import { Subscription, take } from 'rxjs';
 
 @Component({
   selector: 'app-profile',
   templateUrl: './profile.component.html',
   styleUrls: ['./profile.component.scss', '../home.component.scss']
 })
-export class ProfileComponent implements OnInit {
+export class ProfileComponent implements OnInit, OnDestroy {
 
   allMyPosts: IPost[] = [];
 
@@ -22,8 +22,13 @@ export class ProfileComponent implements OnInit {
 
   isFiltered: boolean = false;
 
-  constructor(private homeSvc: HomeService){
+  //SUBSCRIPTIONS
+  private postsSubscription: Subscription | undefined;
 
+  constructor(private homeSvc: HomeService){}
+
+  ngOnDestroy(): void {
+    if (this.postsSubscription) this.postsSubscription.unsubscribe();
   }
 
   ngOnInit(): void {
@@ -37,7 +42,7 @@ export class ProfileComponent implements OnInit {
   }
 
   getAllPostsProfile(topic="trending"){
-    this.homeSvc.getAllPosts().subscribe(
+    this.postsSubscription = this.homeSvc.getAllPosts().subscribe(
       (posts) => {
         this.allMyPosts=[];
         for(let post in posts)

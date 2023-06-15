@@ -1,10 +1,11 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { IRegister } from 'src/app/models/interfaces/i-register';
 import { AuthService } from '../auth.service';
 import { trigger, transition, style, animate } from '@angular/animations';
 import { MatDialogRef } from '@angular/material/dialog';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-register',
@@ -22,7 +23,15 @@ import { MatDialogRef } from '@angular/material/dialog';
     ])
   ]
 })
-export class RegisterComponent implements OnInit {
+export class RegisterComponent implements OnInit, OnDestroy {
+
+  //SUBSCRIPTIONS
+  private signUp: Subscription | undefined;
+  private localId: Subscription | undefined;
+  private userInfos: Subscription | undefined;
+  private error: Subscription | undefined;
+  private errorText: Subscription | undefined;
+
   newUserData: IRegister = {
     email: '',
     password: '',
@@ -38,8 +47,15 @@ export class RegisterComponent implements OnInit {
 
   formRegister!: FormGroup;
 
-  constructor(private authSvc:AuthService, private router: Router, private fb: FormBuilder,
-    public dialogRef: MatDialogRef<RegisterComponent>){ }
+  constructor(private authSvc: AuthService, private router: Router, private fb: FormBuilder, public dialogRef: MatDialogRef<RegisterComponent>) { }
+
+  ngOnDestroy(): void {
+    if (this.signUp) this.signUp.unsubscribe;
+    if (this.localId) this.localId.unsubscribe;
+    if (this.userInfos) this.userInfos.unsubscribe;
+    if (this.error) this.error.unsubscribe;
+    if (this.errorText) this.errorText.unsubscribe;
+  }
 
 
   ngOnInit(): void {
@@ -60,34 +76,34 @@ export class RegisterComponent implements OnInit {
   register() {
     this.newUserData = this.formRegister.value;
     console.log(this.newUserData);
-    this.authSvc.signUp(this.newUserData)
+    this.signUp = this.authSvc.signUp(this.newUserData)
       .subscribe(res => {
         console.log(res);
         this.authSvc.localIdSubject.next(res.localId)
         /* this.router.navigate(['./auth/login']); */
         this.closeRef();
       })
-      this.handleErrorMessage();
+    this.handleErrorMessage();
 
     this.newUserData.savedPosts = [];
-    this.authSvc.localId$.subscribe(res => {
+    this.localId = this.authSvc.localId$.subscribe(res => {
       this.newUserData.id = res;
       console.log(res);
       console.log(this.newUserData.id);
-      this.authSvc.signUpForUserInfos(this.newUserData)
-      .subscribe(res => {
-        console.log("🚀 ~ file: register.component.ts:75 ~ RegisterComponent ~ register ~ res:", res)
-    })
+      this.userInfos=this.authSvc.signUpForUserInfos(this.newUserData)
+        .subscribe(res => {
+          console.log("🚀 ~ file: register.component.ts:75 ~ RegisterComponent ~ register ~ res:", res)
+        })
     })
     delete this.newUserData.password;
 
   }
 
   handleErrorMessage() {
-    this.authSvc.error$.subscribe(error => {
+    this.error=this.authSvc.error$.subscribe(error => {
       this.showError = error;
     });
-    this.authSvc.errorText$.subscribe(text => {
+    this.errorText=this.authSvc.errorText$.subscribe(text => {
       this.textError = text;
     })
   }

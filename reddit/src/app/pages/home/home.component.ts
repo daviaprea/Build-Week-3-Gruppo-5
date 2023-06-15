@@ -1,4 +1,4 @@
-import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
+import { Component, ElementRef, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { HomeService } from '../home.service';
 import { AuthService } from '../auth/auth.service';
 import { Router } from '@angular/router';
@@ -6,13 +6,14 @@ import { IPost } from 'src/app/models/interfaces/i-post';
 import { IRegister } from 'src/app/models/interfaces/i-register';
 import { Icomment } from 'src/app/models/interfaces/icomment';
 import { IPostPlusComments } from 'src/app/models/interfaces/ipost-plus-comments';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-home',
   templateUrl: './home.component.html',
   styleUrls: ['./home.component.scss']
 })
-export class HomeComponent implements OnInit {
+export class HomeComponent implements OnInit, OnDestroy {
   //array con tutti i post
   allDisplayablePosts:IPost[]=[];
   //array che si aggiorna a seconda del filtro
@@ -23,12 +24,22 @@ export class HomeComponent implements OnInit {
   postCommentedArray:IPostPlusComments[] = [];
   postCommented!: IPostPlusComments;
 
+  //SUBSCRIPTIONS
+  private postsSubscription: Subscription | undefined;
+  private commentsSubscription: Subscription | undefined;
+  private likesSubscription: Subscription | undefined;
+
   likes:number=0;
 
   //conterrà l'utente loggato
   userLogged: IRegister | null = null;
 
   constructor(private homeSvc: HomeService, private authSvc: AuthService, private router: Router){}
+  ngOnDestroy(){
+    if(this.postsSubscription) this.postsSubscription.unsubscribe();
+    if(this.commentsSubscription) this.commentsSubscription.unsubscribe();
+    if(this.likesSubscription) this.likesSubscription.unsubscribe();
+  }
 
   ngOnInit(): void {
     this.getAllPostsHome();
@@ -41,7 +52,7 @@ export class HomeComponent implements OnInit {
   }
 
   getAllPostsHome(topic="trending"){
-    this.homeSvc.getAllPosts().subscribe(
+    this.postsSubscription=this.homeSvc.getAllPosts().subscribe(
       (posts) => {
         this.allDisplayablePosts=[];
         for(let post in posts)
@@ -65,7 +76,7 @@ export class HomeComponent implements OnInit {
     //array con tutti gli id dei post
     const allPostId: string[] = this.allDisplayablePosts.map((post) => post.id);
     //prendo tutti i commenti (dopo la risposta della chiamata)
-    this.homeSvc.getAllComment().subscribe(
+    this.commentsSubscription=this.homeSvc.getAllComment().subscribe(
       (comments) => {
         //filtro i commenti che corrispondono agli id dei post
         const commentsArr = Array.from(comments)
@@ -95,7 +106,7 @@ export class HomeComponent implements OnInit {
     let user:IRegister=JSON.parse(localStorage.getItem("userInfos")!);
     if(post.likes.hasOwnProperty(user.uniqueId)) delete post.likes[user.uniqueId];
     else post.likes[user.uniqueId]=user;
-    this.homeSvc.likePost(post).subscribe(res=>console.log(res));
+    this.likesSubscription=this.homeSvc.likePost(post).subscribe(res=>console.log(res));
   }
 
   getLikesCount(post: any): number

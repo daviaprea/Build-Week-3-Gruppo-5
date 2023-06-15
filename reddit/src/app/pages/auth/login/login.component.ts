@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { AuthService } from '../auth.service';
@@ -8,6 +8,7 @@ import { MatDialog } from '@angular/material/dialog';
 import { MatDialogRef } from '@angular/material/dialog';
 import { RegisterComponent } from '../register/register.component';
 import { HomeService } from '../../home.service';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-login',
@@ -25,7 +26,13 @@ import { HomeService } from '../../home.service';
     ])
   ]
 })
-export class LoginComponent implements OnInit{
+export class LoginComponent implements OnInit, OnDestroy{
+  //SUBSCRIPTIONS
+  private signIn: Subscription | undefined;
+  private userInfos: Subscription | undefined;
+  private error: Subscription | undefined;
+  private errorText: Subscription | undefined;
+
   newUserData: ILogin = {
     email: '',
     password: '',
@@ -47,6 +54,12 @@ export class LoginComponent implements OnInit{
     public dialogRef: MatDialogRef<LoginComponent>,
     private homeSvc: HomeService
     ){ }
+  ngOnDestroy(): void {
+    if(this.signIn) this.signIn.unsubscribe();
+    if(this.userInfos) this.userInfos.unsubscribe();
+    if(this.error) this.error.unsubscribe();
+    if(this.errorText) this.errorText.unsubscribe();
+  }
 
 
   ngOnInit(): void {
@@ -64,10 +77,10 @@ export class LoginComponent implements OnInit{
   login(){
     this.newUserData = this.formRegister.value;
     console.log(this.newUserData);
-    this.authSvc.signIn(this.newUserData)
+    this.signIn=this.authSvc.signIn(this.newUserData)
       .subscribe(res => {
         console.log(res.email);
-        this.authSvc.signInForUserInfos(res).subscribe(res => {
+        this.userInfos=this.authSvc.signInForUserInfos(res).subscribe(res => {
           console.log('dentro il subscribe', res);
           this.homeSvc.findLoggedUser();
           this.router.navigate(['profile']);
@@ -87,10 +100,10 @@ export class LoginComponent implements OnInit{
   }
 
   handleErrorMessage() {
-    this.authSvc.error$.subscribe(error => {
+    this.error=this.authSvc.error$.subscribe(error => {
       this.showError = error;
     });
-    this.authSvc.errorText$.subscribe(text => {
+    this.errorText=this.authSvc.errorText$.subscribe(text => {
       this.textError = text;
     })
   }
