@@ -7,10 +7,9 @@ import { MatRippleModule } from '@angular/material/core';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { NgbCollapseModule } from '@ng-bootstrap/ng-bootstrap';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-
+import { MatInputModule } from '@angular/material/input';
 import { HomeRoutingModule } from './home-routing.module';
 import { HomeComponent } from './home.component';
-
 
 @NgModule({
   declarations: [
@@ -26,7 +25,8 @@ import { HomeComponent } from './home.component';
     MatFormFieldModule,
     NgbCollapseModule,
     FormsModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    MatInputModule
   ]
 })
 export class HomeModule { }
