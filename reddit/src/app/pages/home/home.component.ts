@@ -41,6 +41,7 @@ export class HomeComponent implements OnInit, OnDestroy {
     if(this.likesSubscription) this.likesSubscription.unsubscribe();
   }
 
+
   ngOnInit(): void {
     this.getAllPostsHome();
     //recupero info dell'utente loggato

@@ -144,7 +144,38 @@
                 </div>
               </mat-tab>
 
-              <mat-tab label="Saved Posts">Saved Posts</mat-tab>
+                <mat-tab label="Saved Posts">
+                  <mat-card
+                    class="example-card w-50"
+                    *ngFor="let myPost of savedPostArray"
+                  >
+                    <mat-card-header>
+                      <div mat-card-avatar class="header-card-img">
+                        <img [src]="myPost.user.profilePic" alt="" />
+                      </div>
+                      <mat-card-title>{{ myPost.title }}</mat-card-title>
+                      <mat-card-subtitle>{{
+                        myPost.user.nickname
+                      }}</mat-card-subtitle>
+                    </mat-card-header>
+                    <img
+                      mat-card-image
+                      [src]="myPost.imageUrl"
+                      alt="Photo of a Shiba Inu"
+                    />
+                    <mat-card-content>
+                      <p class="mt-3">Topic: {{ myPost.postTopic }}</p>
+                      <p class="mt-3">
+                        {{ myPost.bodyText }}
+                      </p>
+                    </mat-card-content>
+                    <mat-card-actions class="d-flex justify-content-end">
+                      <button class="save" mat-button>
+                        <mat-icon class="bookFull">bookmark</mat-icon>
+                      </button>
+                    </mat-card-actions>
+                  </mat-card>
+                </mat-tab>
 
               <mat-tab label="Liked Posts">
                 <mat-card

@@ -26,6 +26,8 @@ export class ProfileComponent implements OnInit, OnDestroy {
 
   isFiltered: boolean = false;
 
+  likesSubscription: Subscription | undefined;
+
   //SUBSCRIPTIONS
   private postsSubscription: Subscription | undefined;
 
@@ -33,6 +35,7 @@ export class ProfileComponent implements OnInit, OnDestroy {
 
   ngOnDestroy(): void {
     if (this.postsSubscription) this.postsSubscription.unsubscribe();
+    if (this.likesSubscription) this.likesSubscription.unsubscribe();
   }
 
   ngOnInit(): void {
@@ -43,6 +46,7 @@ export class ProfileComponent implements OnInit, OnDestroy {
       }
       this.getAllPostsProfile();
       this.getAllLikedPosts();
+      this.getAllSavedPosts();
     })
   }
 
@@ -54,8 +58,8 @@ export class ProfileComponent implements OnInit, OnDestroy {
         {
           if (post.hasOwnProperty(this.userLogged!.uniqueId)) {
             let obj:IPost=posts[post];
-          obj.id=post;
-          this.allMyPosts.push(obj);
+            obj.id=post;
+            this.allMyPosts.push(obj);
           }
 
         }
@@ -124,5 +128,21 @@ export class ProfileComponent implements OnInit, OnDestroy {
         console.log('errore nel recuperare i post', error);
       }
     );
+  }
+
+  like(post:IPost)
+  {
+    let user:IRegister=JSON.parse(localStorage.getItem("userInfos")!);
+    if(post.likes.hasOwnProperty(user.uniqueId)) delete post.likes[user.uniqueId];
+    else post.likes[user.uniqueId]=user;
+    this.likesSubscription=this.homeSvc.likePost(post).subscribe(res=>console.log(res));
+  }
+
+  saved(post:IPost)
+  {
+    let user:IRegister=JSON.parse(localStorage.getItem("userInfos")!);
+    if(post.saved.hasOwnProperty(user.uniqueId)) delete post.saved[user.uniqueId];
+    else post.saved[user.uniqueId]=user;
+    this.likesSubscription=this.homeSvc.savePost(post).subscribe(res=>console.log(res));
   }
 }

@@ -49,9 +49,9 @@
             <mat-icon *ngIf="post.likes.hasOwnProperty(userLogged!.uniqueId)">favorite</mat-icon>
             <mat-icon *ngIf="!post.likes.hasOwnProperty(userLogged!.uniqueId)">favorite_border</mat-icon>
           </button>
-          <button class="save" mat-button (click)="savePost()">
-            <mat-icon *ngIf="!saved">bookmark_border</mat-icon>
-            <mat-icon *ngIf="saved" class="bookFull">bookmark</mat-icon>
+          <button class="save" mat-button (click)="saved(post)">
+            <mat-icon *ngIf="post.saved.hasOwnProperty(userLogged!.uniqueId)" class="bookFull">bookmark</mat-icon>
+            <mat-icon *ngIf="!post.saved.hasOwnProperty(userLogged!.uniqueId)">bookmark_border</mat-icon>
           </button>
         </mat-card-actions>
       </mat-card>
