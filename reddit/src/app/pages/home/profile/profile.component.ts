@@ -51,13 +51,15 @@ export class ProfileComponent implements OnInit, OnDestroy {
     })
   }
 
-  getAllPostsProfile(topic="music"){
+  getAllPostsProfile(topic="trending"){
     this.postsSubscription = this.homeSvc.getAllPosts().subscribe(
       (posts) => {
         this.allMyPosts=[];
         for(let post in posts)
         {
-          if (post.hasOwnProperty(this.userLogged!.uniqueId)) {
+          console.log(post);
+
+          if (posts[post].user.uniqueId === this.userLogged!.uniqueId) {
             let obj:IPost=posts[post];
             obj.id=post;
             this.allMyPosts.push(obj);
@@ -134,11 +136,8 @@ export class ProfileComponent implements OnInit, OnDestroy {
   like(post:IPost)
   {
     let user:IRegister=JSON.parse(localStorage.getItem("userInfos")!);
-    if(post.likes.hasOwnProperty(user.uniqueId)){
-      delete post.likes[user.uniqueId]
-    }else{
-      post.likes[user.uniqueId]=user
-    };
+    if(post.likes.hasOwnProperty(user.uniqueId)) delete post.likes[user.uniqueId]
+    else post.likes[user.uniqueId]=user
     this.likesSubscription = this.homeSvc.likePost(post).subscribe(res=>console.log(res));
     this.getAllLikedPosts();
   }
@@ -146,11 +145,8 @@ export class ProfileComponent implements OnInit, OnDestroy {
   saved(post:IPost)
   {
     let user:IRegister=JSON.parse(localStorage.getItem("userInfos")!);
-    if(post.saved.hasOwnProperty(user.uniqueId)){
-      delete post.saved[user.uniqueId]
-    }else{
-    post.saved[user.uniqueId]=user
-    };
+    if(post.saved.hasOwnProperty(user.uniqueId))delete post.saved[user.uniqueId]
+    else post.saved[user.uniqueId]=user
     this.saveSubscription = this.homeSvc.savePost(post).subscribe(res=>console.log(res));
     this.getAllSavedPosts();
   }
