@@ -9,5 +9,6 @@ export interface IPost {
   videoUrl?:string;
   postTopic:string;
   likes: {[key: string]: any};
+  saved: {[key: string]:any};
   user: IRegister
 }

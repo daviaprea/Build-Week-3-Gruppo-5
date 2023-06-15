@@ -20,6 +20,10 @@ export class ProfileComponent implements OnInit, OnDestroy {
 
   filteredPosts: IPost[] = [];
 
+  likedPosts: IPost[] = [];
+
+  savedPostArray: IPost[] = [];
+
   isFiltered: boolean = false;
 
   //SUBSCRIPTIONS
@@ -38,6 +42,7 @@ export class ProfileComponent implements OnInit, OnDestroy {
         this.userLogged = user;
       }
       this.getAllPostsProfile();
+      this.getAllLikedPosts();
     })
   }
 
@@ -47,9 +52,12 @@ export class ProfileComponent implements OnInit, OnDestroy {
         this.allMyPosts=[];
         for(let post in posts)
         {
-          let obj:IPost=posts[post];
+          if (post.hasOwnProperty(this.userLogged!.uniqueId)) {
+            let obj:IPost=posts[post];
           obj.id=post;
           this.allMyPosts.push(obj);
+          }
+
         }
 
         if(topic!="trending") this.allMyPosts=this.allMyPosts.filter(post=>post.postTopic==topic);
@@ -71,5 +79,50 @@ export class ProfileComponent implements OnInit, OnDestroy {
 
   dontFilter(){
     this.filteredPosts = this.allMyPosts;
+  }
+
+  getAllLikedPosts(){
+    this.homeSvc.getAllPosts().subscribe(
+      (posts) => {
+        this.likedPosts=[];
+        for(let post in posts)
+        {
+          let obj:IPost=posts[post];
+          obj.id=post;
+          this.likedPosts.push(obj);
+        }
+        console.log('Post recuperati', this.likedPosts);
+        this.likedPosts = this.likedPosts.filter(post => post.likes.hasOwnProperty(this.userLogged!.uniqueId));
+        console.log('Post recuperati', this.likedPosts);
+
+
+      },
+      (error) => {
+        console.log('errore nel recuperare i post', error);
+      }
+    );
+  }
+
+
+  getAllSavedPosts(){
+    this.homeSvc.getAllPosts().subscribe(
+      (posts) => {
+        this.savedPostArray=[];
+        for(let post in posts)
+        {
+          let obj:IPost=posts[post];
+          obj.id=post;
+          this.savedPostArray.push(obj);
+        }
+        console.log('Post recuperati', this.savedPostArray);
+        this.savedPostArray = this.savedPostArray.filter(post => post.saved.hasOwnProperty(this.userLogged!.uniqueId));
+        console.log('Post recuperati', this.savedPostArray);
+
+
+      },
+      (error) => {
+        console.log('errore nel recuperare i post', error);
+      }
+    );
   }
 }

@@ -109,19 +109,21 @@ export class HomeComponent implements OnInit, OnDestroy {
     this.likesSubscription=this.homeSvc.likePost(post).subscribe(res=>console.log(res));
   }
 
+  saved(post:IPost)
+  {
+    let user:IRegister=JSON.parse(localStorage.getItem("userInfos")!);
+    if(post.saved.hasOwnProperty(user.uniqueId)) delete post.saved[user.uniqueId];
+    else post.saved[user.uniqueId]=user;
+    this.likesSubscription=this.homeSvc.savePost(post).subscribe(res=>console.log(res));
+  }
+
+
   getLikesCount(post: any): number
   {
     return Object.keys(post.likes).length-1;
   }
 
-  saved: boolean = false;
-  savePost():void{
-    if (!this.saved) {
-      this.saved = true;
-    } else {
-      this.saved = false;
-    }
-  }
+
 }
 
 /*
