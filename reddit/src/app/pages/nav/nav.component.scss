@@ -1,7 +1,25 @@
 mat-toolbar {
   height: 60px;
+  background-color: #1a1a1a !important;
   .search {
     width: 450px;
+    position: relative;
+  }
+  .search input {
+    border-radius: 50px;
+    border: none;
+    padding: 10px;
+    width: 100%;
+    outline: none;
+    padding-left: 40px;
+  }
+  #search-icon {
+    position: absolute;
+    left: 0;
+    top: 50%;
+    transform: translateY(-50%);
+    color: #000;
+    margin-left: 10px;
   }
 }
 
