@@ -170,7 +170,7 @@
                       </p>
                     </mat-card-content>
                     <mat-card-actions class="d-flex justify-content-end">
-                      <button class="save" mat-button>
+                      <button class="save" (click)="saved(myPost)" mat-button>
                         <mat-icon class="bookFull">bookmark</mat-icon>
                       </button>
                     </mat-card-actions>
@@ -203,7 +203,7 @@
                     </p>
                   </mat-card-content>
                   <mat-card-actions class="d-flex justify-content-end">
-                    <button class="like" mat-button>
+                    <button class="like" (click)="like(myPost)" mat-button>
                       <mat-icon>favorite</mat-icon>
                     </button>
                     <button class="save" mat-button>

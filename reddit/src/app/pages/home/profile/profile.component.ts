@@ -27,6 +27,7 @@ export class ProfileComponent implements OnInit, OnDestroy {
   isFiltered: boolean = false;
 
   likesSubscription: Subscription | undefined;
+  saveSubscription: Subscription | undefined;
 
   //SUBSCRIPTIONS
   private postsSubscription: Subscription | undefined;
@@ -35,7 +36,7 @@ export class ProfileComponent implements OnInit, OnDestroy {
 
   ngOnDestroy(): void {
     if (this.postsSubscription) this.postsSubscription.unsubscribe();
-    if (this.likesSubscription) this.likesSubscription.unsubscribe();
+
   }
 
   ngOnInit(): void {
@@ -50,7 +51,7 @@ export class ProfileComponent implements OnInit, OnDestroy {
     })
   }
 
-  getAllPostsProfile(topic="trending"){
+  getAllPostsProfile(topic="music"){
     this.postsSubscription = this.homeSvc.getAllPosts().subscribe(
       (posts) => {
         this.allMyPosts=[];
@@ -133,16 +134,24 @@ export class ProfileComponent implements OnInit, OnDestroy {
   like(post:IPost)
   {
     let user:IRegister=JSON.parse(localStorage.getItem("userInfos")!);
-    if(post.likes.hasOwnProperty(user.uniqueId)) delete post.likes[user.uniqueId];
-    else post.likes[user.uniqueId]=user;
-    this.likesSubscription=this.homeSvc.likePost(post).subscribe(res=>console.log(res));
+    if(post.likes.hasOwnProperty(user.uniqueId)){
+      delete post.likes[user.uniqueId]
+    }else{
+      post.likes[user.uniqueId]=user
+    };
+    this.likesSubscription = this.homeSvc.likePost(post).subscribe(res=>console.log(res));
+    this.getAllLikedPosts();
   }
 
   saved(post:IPost)
   {
     let user:IRegister=JSON.parse(localStorage.getItem("userInfos")!);
-    if(post.saved.hasOwnProperty(user.uniqueId)) delete post.saved[user.uniqueId];
-    else post.saved[user.uniqueId]=user;
-    this.likesSubscription=this.homeSvc.savePost(post).subscribe(res=>console.log(res));
+    if(post.saved.hasOwnProperty(user.uniqueId)){
+      delete post.saved[user.uniqueId]
+    }else{
+    post.saved[user.uniqueId]=user
+    };
+    this.saveSubscription = this.homeSvc.savePost(post).subscribe(res=>console.log(res));
+    this.getAllSavedPosts();
   }
 }
