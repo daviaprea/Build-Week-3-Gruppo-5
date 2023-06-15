@@ -36,17 +36,19 @@ export class ProfileComponent implements OnInit {
     })
   }
 
-  getAllPostsProfile(){
+  getAllPostsProfile(topic="trending"){
     this.homeSvc.getAllPosts().subscribe(
       (posts) => {
-        console.log("LOG DELLA RES", posts)
-
-        for(let post in posts){
-          const myPost:IPost = posts[post]
-          if(myPost.user.id === this.userLogged?.id){
-            this.allMyPosts.push(myPost)
-          }
+        this.allMyPosts=[];
+        for(let post in posts)
+        {
+          let obj:IPost=posts[post];
+          obj.id=post;
+          this.allMyPosts.push(obj);
         }
+
+        if(topic!="trending") this.allMyPosts=this.allMyPosts.filter(post=>post.postTopic==topic);
+
         console.log('Post recuperati', this.allMyPosts);
       },
       (error) => {
