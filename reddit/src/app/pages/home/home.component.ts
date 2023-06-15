@@ -40,19 +40,20 @@ export class HomeComponent implements OnInit {
     })
   }
 
-  getAllPostsHome(){
+  getAllPostsHome(topic="trending"){
     this.homeSvc.getAllPosts().subscribe(
       (posts) => {
+        this.allDisplayablePosts=[];
         for(let post in posts)
         {
           let obj:IPost=posts[post];
           obj.id=post;
           this.allDisplayablePosts.push(obj);
-          /* this.allDisplayablePosts[post]=posts[post]; */
         }
 
+        if(topic!="trending") this.allDisplayablePosts=this.allDisplayablePosts.filter(post=>post.postTopic==topic);
+
         console.log('Post recuperati', this.allDisplayablePosts);
-        /* this.getAllComments(); */
       },
       (error) => {
         console.log('errore nel recuperare i post', error);
@@ -100,12 +101,6 @@ export class HomeComponent implements OnInit {
   getLikesCount(post: any): number
   {
     return Object.keys(post.likes).length-1;
-  }
-
-  filterTopic(topic:string){
-    //nell'html passare come argomento il topic per cui si vuole filtrare
-    this.filteredPosts = this.allDisplayablePosts.filter(post => post.postTopic === topic);
-    console.log("🚀 ~ file: home.component.ts:47 ~ HomeComponent ~ filterTopic ~ this.filteredPosts:", this.filteredPosts)
   }
 
   saved: boolean = false;
