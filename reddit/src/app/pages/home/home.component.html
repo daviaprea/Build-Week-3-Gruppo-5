@@ -66,15 +66,15 @@
           </mat-form-field>
           <button class="btn btn-warning">Comment</button>
         </form>
-        <div #collapse="ngbCollapse" [(ngbCollapse)]="isCollapsed">
+        <!-- <div #collapse="ngbCollapse" [(ngbCollapse)]="isCollapsed">
           <div class="card" *ngFor="let post of allDisplayablePosts">
             <div>
-              <div mat-card-avatar class="header-card-img"><img [src]="post." alt=""></div>
-              <div>{{comment[1].createdBy.nickname}}</div>
+              <div mat-card-avatar class="header-card-img"><img [src]="post.comments" alt=""></div>
+              <div>{{post.comments[1].createdBy.nickname}}</div>
             </div>
-            <div class="card-body">{{comment[1].body}}</div>
+            <div class="card-body">{{post.comments[1].body}}</div>
           </div>
-        </div>
+        </div> -->
       </mat-card>
     </div>
   </mat-drawer-content>

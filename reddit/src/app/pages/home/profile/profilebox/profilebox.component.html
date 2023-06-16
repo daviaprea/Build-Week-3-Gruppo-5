@@ -1,13 +1,13 @@
 <mat-card class="example-card profileBox">
   <mat-card-header>
-    <a class="btn btn-primary newPost" [routerLink]="['create']">New post</a>
-    <mat-card-title-group>
+    <mat-card-title-group class="titleGroup">
       <mat-card-title>{{loggedUser.nickname}}</mat-card-title>
       <mat-card-subtitle>ID: #{{loggedUser.id}}</mat-card-subtitle>
-      <img mat-card-md-image [src]=loggedUser.profilePic  alt="Profile Image">
+      <a class="btn btn-primary newPost" [routerLink]="['create']">New post</a>
     </mat-card-title-group>
+    <img mat-card-md-image [src]=loggedUser.profilePic  alt="Profile Image">
   </mat-card-header>
-  <mat-card-content>
+  <mat-card-content class="editInfo">
     <mat-accordion>
       <mat-expansion-panel hideToggle>
         <mat-expansion-panel-header>
@@ -19,19 +19,17 @@
           </mat-panel-description> -->
         </mat-expansion-panel-header>
 
-      <form (ngSubmit)="editMyPost()">
+      <form class="d-flex flex-column" (ngSubmit)="editMyPost()">
         <mat-form-field appearance="outline">
           <mat-label>Your New Nickname</mat-label>
           <input matInput placeholder="Placeholder" name="nickname" [(ngModel)]="loggedUser.nickname">
-          <mat-hint>Edit your Nickname</mat-hint>
         </mat-form-field>
 
-        <mat-form-field appearance="outline">
+        <mat-form-field class="mt-2" appearance="outline">
           <mat-label>Your New Image</mat-label>
           <input matInput placeholder="Placeholder" name="profilePic" [(ngModel)]="loggedUser.profilePic">
-          <mat-hint>Upload your new Image</mat-hint>
         </mat-form-field>
-        <button mat-raised-button color="primary" type="submit">Submit</button>
+        <button mat-raised-button class="btn btn-primary mt-1" color="primary" type="submit">Submit</button>
       </form>
 
 

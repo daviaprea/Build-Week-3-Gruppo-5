@@ -1,7 +1,23 @@
 .profileBox{
-  position: sticky;
-  top: 0;
+  position: fixed;
+  top: 150px;
+  right: 50px;
   z-index: 1;
-  width: 600px;
+  width: 400px;
   margin: 0 auto;
+  .titleGroup{
+    display: flex;
+    flex-direction: column;
+    align-items: start;
+    .newPost{
+      width: 100px;
+    }
+  }
+  img{
+    border-radius: 100px;
+    margin: 0 0 10px 0;
+  }
+  .editInfo{
+    margin: 10px 0;
+  }
 }
