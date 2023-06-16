@@ -143,5 +143,5 @@ export class HomeComponent implements OnInit, OnDestroy {
     return Object.keys(post.likes).length-1;
   }
 
-
+ 
 }

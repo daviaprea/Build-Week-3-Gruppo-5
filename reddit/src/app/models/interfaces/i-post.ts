@@ -13,4 +13,5 @@ export interface IPost {
   saved: {[key: string]: any};
   comments: {[key: string]: any};
   user: IRegister;
+  isCollapsed:boolean;
 }

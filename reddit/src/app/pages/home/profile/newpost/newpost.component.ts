@@ -38,7 +38,8 @@ export class NewpostComponent implements OnInit, OnDestroy {
     saved: {"start":0},
     comments: {"start": 0},
     id: '',
-    user: this.userParsed
+    user: this.userParsed,
+    isCollapsed:true
   }
 
   constructor(

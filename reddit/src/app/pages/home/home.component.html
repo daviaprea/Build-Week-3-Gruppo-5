@@ -44,8 +44,8 @@
           <p class="mt-3">{{post.bodyText}}</p>
         </mat-card-content>
         <mat-card-actions class="d-flex justify-content-end">
-          <button type="button" class="btn btn-outline-primary ms-2" (click)="isCollapsed = ! isCollapsed"
-            [attr.aria-expanded]="!isCollapsed" aria-controls="collapseExample">
+          <button type="button" class="btn btn-outline-primary ms-2" (click)="post.isCollapsed = !post.isCollapsed"
+            [attr.aria-expanded]="!post.isCollapsed" aria-controls="collapseExample">
             Show Comments
           </button>
           <span>{{getLikesCount(post)}}</span>
@@ -66,7 +66,7 @@
           </mat-form-field>
           <button class="btn btn-warning commentBtn">Comment</button>
         </form>
-        <div class="comment-section" #collapse="ngbCollapse" [(ngbCollapse)]="!isCollapsed">
+        <div class="comment-section" #collapse="ngbCollapse" [(ngbCollapse)]="!post.isCollapsed">
           <div class="card p-2" *ngFor="let property of post.comments | keyvalue">
             <div class="commentTitle d-flex align-items-center gap-4">
               <div mat-card-avatar class="header-card-img"><img class="commentPic" [src]="property.value?.createdBy?.profilePic" alt=""></div>
