@@ -1,7 +1,7 @@
 /* You can add global styles to this file, and also import other style files */
 
-html, body { height: 100%; }
-body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; height: 100vh}
+// html, body { height: 100%; }
+html, body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; height: 100%}
 
 /* Importing Bootstrap SCSS file. */
 @import 'bootstrap/scss/bootstrap';
@@ -10,12 +10,10 @@ body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; height: 100
   width: 10px;
 }
 
-
 ::-webkit-scrollbar-thumb {
   background-color: #5d5d5daa;
   border-radius: 5px;
 }
-
 
 ::-webkit-scrollbar-track {
    display: none;

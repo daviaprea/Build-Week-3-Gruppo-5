@@ -13,7 +13,6 @@
   }
 }
 
-
 mat-card-header{
   display: flex;
   align-items: center;
@@ -33,9 +32,10 @@ mat-drawer{
 
 mat-drawer-content{
   margin-left: 0 !important;
-  mat-card {
+  .home-card {
     box-shadow: 1px 1px 4px;
     margin: 10px;
+    width: 600px !important;
     button {
       border-radius: 5px;
       background: none;
@@ -67,4 +67,8 @@ mat-drawer-content{
 .comment-section{
   max-height: 250px;
   overflow: scroll;
+}
+
+.btnComment:hover {
+  color: rgb(71, 71, 209);
 }
