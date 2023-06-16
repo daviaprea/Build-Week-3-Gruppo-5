@@ -59,7 +59,7 @@
             <mat-icon *ngIf="saved" class="bookFull">bookmark</mat-icon>
           </button>
         </mat-card-actions>
-        <form [formGroup]="formRegister" (ngSubmit)="addComment(post)">
+        <form *ngIf="userLogged" [formGroup]="formRegister" (ngSubmit)="addComment(post)">
           <mat-form-field appearance="outline">
             <mat-label>Comment</mat-label>
             <input type="text" matInput formControlName="comment">
@@ -67,17 +67,15 @@
           <button class="btn btn-warning">Comment</button>
         </form>
         <div #collapse="ngbCollapse" [(ngbCollapse)]="isCollapsed">
-          <div class="card" *ngFor="let post of allDisplayablePosts">
+          <div class="card" *ngFor="let property of post.comments | keyvalue">
             <div>
-              <div mat-card-avatar class="header-card-img"><img [src]="post." alt=""></div>
-              <div>{{comment[1].createdBy.nickname}}</div>
+              <!-- <div mat-card-avatar class="header-card-img"><img [src]="property.value.createdBy.profilePic" alt=""></div> -->
+              <div>{{property.value?.createdBy?.nickname}}</div>
             </div>
-            <div class="card-body">{{comment[1].body}}</div>
+            <div class="card-body">{{property.value?.body}}</div>
           </div>
         </div>
       </mat-card>
     </div>
   </mat-drawer-content>
 </mat-drawer-container>
-
-<!-- *ngFor="comment of comments" -->
