@@ -66,7 +66,7 @@
           </mat-form-field>
           <button class="btn btn-warning">Comment</button>
         </form>
-        <div #collapse="ngbCollapse" [(ngbCollapse)]="isCollapsed">
+        <div #collapse="ngbCollapse" [(ngbCollapse)]="isCollapsed" class="comment-section">
           <div class="card" *ngFor="let property of post.comments | keyvalue">
             <div>
               <!-- <div mat-card-avatar class="header-card-img"><img [src]="property.value.createdBy.profilePic" alt=""></div> -->
