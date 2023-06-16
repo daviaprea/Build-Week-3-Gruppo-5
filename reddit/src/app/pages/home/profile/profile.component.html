@@ -69,7 +69,7 @@
                         Show Comments
                       </button>
                     </mat-card-actions>
-                    <div class="comment-section" #collapse="ngbCollapse" [(ngbCollapse)]="!myPost.isCollapsed">
+                    <div class="comment-section" #collapse="ngbCollapse" [(ngbCollapse)]="myPost.isCollapsed">
                       <div class="card p-2" *ngFor="let property of myPost.comments | keyvalue">
                         <div class="commentTitle d-flex align-items-center gap-4">
                           <div mat-card-avatar class="header-card-img"><img class="commentPic"
@@ -143,7 +143,7 @@
                       <mat-icon class="bookFull">bookmark</mat-icon>
                     </button>
                   </mat-card-actions>
-                  <div class="comment-section" #collapse="ngbCollapse" [(ngbCollapse)]="!myPost.isCollapsed">
+                  <div class="comment-section" #collapse="ngbCollapse" [(ngbCollapse)]="myPost.isCollapsed">
                     <div class="card p-2" *ngFor="let property of myPost.comments | keyvalue">
                       <div class="commentTitle d-flex align-items-center gap-4">
                         <div mat-card-avatar class="header-card-img"><img class="commentPic"
@@ -189,7 +189,7 @@
                       <mat-icon>favorite</mat-icon>
                     </button>
                   </mat-card-actions>
-                  <div class="comment-section" #collapse="ngbCollapse" [(ngbCollapse)]="!myPost.isCollapsed">
+                  <div class="comment-section" #collapse="ngbCollapse" [(ngbCollapse)]="myPost.isCollapsed">
                     <div class="card p-2" *ngFor="let property of myPost.comments | keyvalue">
                       <div class="commentTitle d-flex align-items-center gap-4">
                         <div mat-card-avatar class="header-card-img"><img class="commentPic"
