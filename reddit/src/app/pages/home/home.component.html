@@ -31,7 +31,7 @@
   </mat-drawer>
   <mat-drawer-content>
     <div class="mainContent d-flex flex-column align-items-center">
-      <h1 class="title">Your feed</h1>
+      <h1 class="title">{{topic}} POSTS</h1>
       <mat-card *ngFor="let post of allDisplayablePosts" class="example-card w-50">
         <mat-card-header>
           <div mat-card-avatar class="header-card-img"><img [src]="post.user.profilePic" alt=""></div>

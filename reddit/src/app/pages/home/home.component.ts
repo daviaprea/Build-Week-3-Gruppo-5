@@ -27,6 +27,8 @@ export class HomeComponent implements OnInit, OnDestroy {
   postCommentedArray: IPostPlusComments[] = [];
   postCommented!: IPostPlusComments;
 
+  topic="TRENDING";
+
   isCollapsed: boolean = false;
   formRegister!: FormGroup;
 
@@ -67,6 +69,7 @@ export class HomeComponent implements OnInit, OnDestroy {
           obj.id = post;
           this.allDisplayablePosts.push(obj);
         }
+        this.topic=topic.toUpperCase();
 
         if (topic != "trending") this.allDisplayablePosts = this.allDisplayablePosts.filter(post => post.postTopic == topic);
 
