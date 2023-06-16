@@ -59,25 +59,23 @@
             <mat-icon *ngIf="!post.saved.hasOwnProperty(userLogged!.uniqueId)">bookmark_border</mat-icon>
           </button>
         </mat-card-actions>
-        <form [formGroup]="formRegister" (ngSubmit)="addComment(post)">
+        <form *ngIf="userLogged" [formGroup]="formRegister" (ngSubmit)="addComment(post)">
           <mat-form-field appearance="outline">
             <mat-label>Comment</mat-label>
             <input type="text" matInput formControlName="comment">
           </mat-form-field>
           <button class="btn btn-warning">Comment</button>
         </form>
-        <!-- <div #collapse="ngbCollapse" [(ngbCollapse)]="isCollapsed">
-          <div class="card" *ngFor="let post of allDisplayablePosts">
+        <div #collapse="ngbCollapse" [(ngbCollapse)]="isCollapsed">
+          <div class="card" *ngFor="let property of post.comments | keyvalue">
             <div>
-              <div mat-card-avatar class="header-card-img"><img [src]="post.comments" alt=""></div>
-              <div>{{post.comments[1].createdBy.nickname}}</div>
+              <!-- <div mat-card-avatar class="header-card-img"><img [src]="property.value.createdBy.profilePic" alt=""></div> -->
+              <div>{{property.value?.createdBy?.nickname}}</div>
             </div>
-            <div class="card-body">{{post.comments[1].body}}</div>
+            <div class="card-body">{{property.value?.body}}</div>
           </div>
-        </div> -->
+        </div>
       </mat-card>
     </div>
   </mat-drawer-content>
 </mat-drawer-container>
-
-<!-- *ngFor="comment of comments" -->
