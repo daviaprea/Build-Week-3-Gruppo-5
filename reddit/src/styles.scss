@@ -48,8 +48,30 @@ body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; height: 100
       color: rgb(149, 149, 149);
     }
   }
-  .like, .save {
+  .liked, .save {
     color: #fff;
+  }
+  .commentForm{
+    background-color: rgb(67, 67, 67);;
+    .commentText{
+      border: 2px solid white !important;
+    }
+    .commentBtn{
+      color: white;
+      background-color: #f44a3e !important;
+    }
+    .hide{
+      background-color: #1a1a1a;
+    }
+  }
+  .formContainer{
+    background-color: rgb(50, 44, 53);
+    .newPostForm{
+      background-color: rgb(67, 67, 67);
+      .createBtn{
+        background: #f44a3e;
+      }
+    }
   }
 }
 

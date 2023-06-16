@@ -49,7 +49,7 @@
             Show Comments
           </button>
           <span>{{getLikesCount(post)}}</span>
-          <button *ngIf="userLogged" (click)="like(post)"
+          <button *ngIf="userLogged" class="liked" (click)="like(post)"
             [ngClass]="{'like': post.likes.hasOwnProperty(userLogged!.uniqueId)}" mat-button>
             <mat-icon *ngIf="post.likes.hasOwnProperty(userLogged!.uniqueId)">favorite</mat-icon>
             <mat-icon *ngIf="!post.likes.hasOwnProperty(userLogged!.uniqueId)">favorite_border</mat-icon>
@@ -60,17 +60,17 @@
           </button>
         </mat-card-actions>
         <form *ngIf="userLogged" [formGroup]="formRegister" (ngSubmit)="addComment(post)">
-          <mat-form-field appearance="outline">
-            <mat-label>Comment</mat-label>
-            <input type="text" matInput formControlName="comment">
+          <mat-form-field class="commentForm" appearance="outline">
+            <mat-label class="commentLabel">Comment</mat-label>
+            <input color="white" class="commentText" type="text" matInput formControlName="comment">
           </mat-form-field>
-          <button class="btn btn-warning">Comment</button>
+          <button class="btn btn-warning commentBtn">Comment</button>
         </form>
-        <div #collapse="ngbCollapse" [(ngbCollapse)]="isCollapsed" class="comment-section">
-          <div class="card" *ngFor="let property of post.comments | keyvalue">
-            <div>
-              <!-- <div mat-card-avatar class="header-card-img"><img [src]="property.value.createdBy.profilePic" alt=""></div> -->
-              <div>{{property.value?.createdBy?.nickname}}</div>
+        <div #collapse="ngbCollapse" [(ngbCollapse)]="!isCollapsed">
+          <div class="card p-2" *ngFor="let property of post.comments | keyvalue">
+            <div class="commentTitle d-flex align-items-center gap-4">
+              <div mat-card-avatar class="header-card-img"><img class="commentPic" [src]="property.value?.createdBy?.profilePic" alt=""></div>
+              <div class="fw-bold">{{property.value?.createdBy?.nickname}}</div>
             </div>
             <div class="card-body">{{property.value?.body}}</div>
           </div>
