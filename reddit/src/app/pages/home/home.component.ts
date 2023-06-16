@@ -34,6 +34,8 @@ export class HomeComponent implements OnInit, OnDestroy {
   private postsSubscription: Subscription | undefined;
   private commentsSubscription: Subscription | undefined;
   private likesSubscription: Subscription | undefined;
+  private delSubscription: Subscription | undefined;
+  private commentSubscription: Subscription | undefined;
 
   likes: number = 0;
 
@@ -43,6 +45,8 @@ export class HomeComponent implements OnInit, OnDestroy {
     if (this.postsSubscription) this.postsSubscription.unsubscribe();
     if (this.commentsSubscription) this.commentsSubscription.unsubscribe();
     if (this.likesSubscription) this.likesSubscription.unsubscribe();
+    if (this.delSubscription) this.delSubscription.unsubscribe();
+    if (this.commentSubscription) this.commentSubscription.unsubscribe();
   }
 
 
@@ -78,6 +82,11 @@ export class HomeComponent implements OnInit, OnDestroy {
     );
   }
 
+  delPost(id:string)
+  {
+    this.delSubscription=this.homeSvc.deletePost(id).subscribe(()=>window.location.reload());
+  }
+
   /* addComment(post:IPost) {
     let newComment: Icomment = {
       createdBy: this.userLogged!,
@@ -108,7 +117,7 @@ export class HomeComponent implements OnInit, OnDestroy {
     post.comments[String(new Date().getTime())+newComment.createdBy.uniqueId]=newComment;
     console.log(post);
     console.log(newComment);
-    this.homeSvc.newComment(post).subscribe(res => {
+    this.commentSubscription=this.homeSvc.newComment(post).subscribe(res => {
       this.formRegister.reset();
       console.log(res);
       /* this.homeSvc.getAllComment().subscribe(data=>{
@@ -139,6 +148,4 @@ export class HomeComponent implements OnInit, OnDestroy {
   {
     return Object.keys(post.likes).length-1;
   }
-
-
 }

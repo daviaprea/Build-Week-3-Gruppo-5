@@ -16,5 +16,6 @@ export const environment = {
   logUrl: "https://identitytoolkit.googleapis.com/v1/accounts:signInWithPassword?key=AIzaSyAmH6Raw2_xaHtGQURY40cogSge088CUmA",
   refreshUrl: "https://securetoken.googleapis.com/v1/token?key=AIzaSyAmH6Raw2_xaHtGQURY40cogSge088CUmA",
   editUser: "https://red-2-f17d9-default-rtdb.europe-west1.firebasedatabase.app/users/",
-  editPost: "https://red-2-f17d9-default-rtdb.europe-west1.firebasedatabase.app/posts/"
+  editPost: "https://red-2-f17d9-default-rtdb.europe-west1.firebasedatabase.app/posts/",
+  deletePost: "https://red-2-f17d9.firebaseio.com/posts/"
 };

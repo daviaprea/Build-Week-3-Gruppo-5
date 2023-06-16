@@ -58,13 +58,14 @@
             <mat-icon *ngIf="post.saved.hasOwnProperty(userLogged!.uniqueId)" class="bookFull">bookmark</mat-icon>
             <mat-icon *ngIf="!post.saved.hasOwnProperty(userLogged!.uniqueId)">bookmark_border</mat-icon>
           </button>
+          <button (click)="delPost(post.id)" *ngIf="userLogged?.uniqueId==post.user.uniqueId"><mat-icon>delete</mat-icon></button>
         </mat-card-actions>
         <form *ngIf="userLogged" [formGroup]="formRegister" (ngSubmit)="addComment(post)">
           <mat-form-field appearance="outline">
             <mat-label>Comment</mat-label>
             <input type="text" matInput formControlName="comment">
           </mat-form-field>
-          <button class="btn btn-warning">Comment</button>
+          <button [disabled]="!formRegister.valid" class="btn btn-warning">Comment</button>
         </form>
         <div #collapse="ngbCollapse" [(ngbCollapse)]="isCollapsed" class="comment-section">
           <div class="card" *ngFor="let property of post.comments | keyvalue">

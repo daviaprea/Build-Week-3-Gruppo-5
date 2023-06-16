@@ -26,17 +26,24 @@ export class ProfileComponent implements OnInit, OnDestroy {
 
   isFiltered: boolean = false;
 
-  likesSubscription: Subscription | undefined;
-  saveSubscription: Subscription | undefined;
 
   //SUBSCRIPTIONS
   private postsSubscription: Subscription | undefined;
+  private likesSubscription: Subscription | undefined;
+  private saveSubscription: Subscription | undefined;
+  private delSubscription: Subscription | undefined;
+  private allLikedSubscription: Subscription | undefined;
+  private allSavedSubscription: Subscription | undefined;
 
   constructor(private homeSvc: HomeService){}
 
   ngOnDestroy(): void {
     if (this.postsSubscription) this.postsSubscription.unsubscribe();
-
+    if (this.likesSubscription) this.likesSubscription.unsubscribe();
+    if (this.saveSubscription) this.saveSubscription.unsubscribe();
+    if (this.delSubscription) this.delSubscription.unsubscribe();
+    if (this.allLikedSubscription) this.allLikedSubscription.unsubscribe();
+    if (this.allSavedSubscription) this.allSavedSubscription.unsubscribe();
   }
 
   ngOnInit(): void {
@@ -77,6 +84,11 @@ export class ProfileComponent implements OnInit, OnDestroy {
     );
   }
 
+  delPost(id:string)
+  {
+    this.delSubscription=this.homeSvc.deletePost(id).subscribe(()=>window.location.reload());
+  }
+
   filterTopic(topic:string){
     //nell'html passare come argomento il topic per cui si vuole filtrare
     this.filteredPosts = this.allMyPosts.filter(post => post.postTopic === topic);
@@ -89,7 +101,7 @@ export class ProfileComponent implements OnInit, OnDestroy {
   }
 
   getAllLikedPosts(){
-    this.homeSvc.getAllPosts().subscribe(
+    this.allLikedSubscription=this.homeSvc.getAllPosts().subscribe(
       (posts) => {
         this.likedPosts=[];
         for(let post in posts)
@@ -110,7 +122,7 @@ export class ProfileComponent implements OnInit, OnDestroy {
 
 
   getAllSavedPosts(){
-    this.homeSvc.getAllPosts().subscribe(
+    this.allSavedSubscription=this.homeSvc.getAllPosts().subscribe(
       (posts) => {
         this.savedPostArray=[];
         for(let post in posts)
@@ -133,15 +145,10 @@ export class ProfileComponent implements OnInit, OnDestroy {
   like(post:IPost)
   {
     let user:IRegister=JSON.parse(localStorage.getItem("userInfos")!);
-    if(post.likes.hasOwnProperty(user.uniqueId)) {
-      delete post.likes[user.uniqueId]
-      this.getAllLikedPosts();
-    }
-    else {
-      post.likes[user.uniqueId]=user
-      this.getAllLikedPosts();
-    }
-    this.likesSubscription = this.homeSvc.likePost(post).subscribe(res=>console.log(res));
+    if(post.likes.hasOwnProperty(user.uniqueId)) delete post.likes[user.uniqueId];
+    else post.likes[user.uniqueId]=user;
+
+    this.likesSubscription = this.homeSvc.likePost(post).subscribe(()=>this.getAllLikedPosts());
   }
 
   // like = async (post: IPost) => {
@@ -165,15 +172,9 @@ export class ProfileComponent implements OnInit, OnDestroy {
   saved(post:IPost)
   {
     let user:IRegister=JSON.parse(localStorage.getItem("userInfos")!);
-    if(post.saved.hasOwnProperty(user.uniqueId)){
-      delete post.saved[user.uniqueId]
-      this.getAllSavedPosts();
-    }
-    else {
-      post.saved[user.uniqueId]=user
-      this.getAllSavedPosts();
-    }
-    this.saveSubscription = this.homeSvc.savePost(post).subscribe(res=>console.log(res));
+    if(post.saved.hasOwnProperty(user.uniqueId)) delete post.saved[user.uniqueId];
+    else post.saved[user.uniqueId]=user;
+    this.saveSubscription = this.homeSvc.savePost(post).subscribe(()=>this.getAllSavedPosts());
   }
 
   // saved = async (post: IPost) => {

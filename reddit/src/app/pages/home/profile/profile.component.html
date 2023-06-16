@@ -1,58 +1,28 @@
 <mat-drawer-container class="profileContainer">
   <mat-drawer mode="side" opened>
     <div class="d-flex flex-column buttonContainer">
-      <button
-        class="buttonSide d-flex align-items-center justify-content-center"
-        matRipple
-        matRippleColor="color"
-        mat-button
-        (click)="getAllPostsProfile('trending')"
-      >
+      <button class="buttonSide d-flex align-items-center justify-content-center" matRipple matRippleColor="color"
+        mat-button (click)="getAllPostsProfile('trending')">
         <mat-icon>trending_up</mat-icon> Trending
       </button>
-      <button
-        class="buttonSide d-flex align-items-center justify-content-center"
-        matRipple
-        matRippleColor="color"
-        mat-button
-        (click)="getAllPostsProfile('music')"
-      >
+      <button class="buttonSide d-flex align-items-center justify-content-center" matRipple matRippleColor="color"
+        mat-button (click)="getAllPostsProfile('music')">
         <mat-icon>headset</mat-icon> Music
       </button>
-      <button
-        class="buttonSide d-flex align-items-center justify-content-center"
-        matRipple
-        matRippleColor="color"
-        mat-button
-        (click)="getAllPostsProfile('movies')"
-      >
+      <button class="buttonSide d-flex align-items-center justify-content-center" matRipple matRippleColor="color"
+        mat-button (click)="getAllPostsProfile('movies')">
         <mat-icon> local_movies</mat-icon> Movies
       </button>
-      <button
-        class="buttonSide d-flex align-items-center justify-content-center"
-        matRipple
-        matRippleColor="color"
-        mat-button
-        (click)="getAllPostsProfile('gaming')"
-      >
+      <button class="buttonSide d-flex align-items-center justify-content-center" matRipple matRippleColor="color"
+        mat-button (click)="getAllPostsProfile('gaming')">
         <mat-icon>games</mat-icon> Gaming
       </button>
-      <button
-        class="buttonSide d-flex align-items-center justify-content-center"
-        matRipple
-        matRippleColor="color"
-        mat-button
-        (click)="getAllPostsProfile('sport')"
-      >
+      <button class="buttonSide d-flex align-items-center justify-content-center" matRipple matRippleColor="color"
+        mat-button (click)="getAllPostsProfile('sport')">
         <mat-icon> directions_run</mat-icon> Sport
       </button>
-      <button
-        class="buttonSide d-flex align-items-center justify-content-center"
-        matRipple
-        matRippleColor="color"
-        mat-button
-        (click)="getAllPostsProfile('technology')"
-      >
+      <button class="buttonSide d-flex align-items-center justify-content-center" matRipple matRippleColor="color"
+        mat-button (click)="getAllPostsProfile('technology')">
         <mat-icon>devices_other</mat-icon> Technology
       </button>
     </div>
@@ -62,19 +32,12 @@
       <div class="row">
         <div>
           <div id="label-prof-page">
-            <mat-tab-group
-              mat-stretch-tabs="false"
-              mat-align-tabs="center"
-              id="label-prof-page"
-              class="d-flex flex-column align-items-center"
-            >
+            <mat-tab-group mat-stretch-tabs="false" mat-align-tabs="center" id="label-prof-page"
+              class="d-flex flex-column align-items-center">
               <!-- sezione my post -->
               <mat-tab label="My Posts">
                 <div *ngIf="!isFiltered">
-                  <mat-card
-                    class="example-card profileCard"
-                    *ngFor="let myPost of allMyPosts"
-                  >
+                  <mat-card class="example-card profileCard" *ngFor="let myPost of allMyPosts">
                     <mat-card-header>
                       <div mat-card-avatar class="header-card-img">
                         <img [src]="myPost.user.profilePic" alt="" />
@@ -82,13 +45,9 @@
                       <mat-card-title>{{ myPost.title }}</mat-card-title>
                       <mat-card-subtitle>{{
                         myPost.user.nickname
-                      }}</mat-card-subtitle>
+                        }}</mat-card-subtitle>
                     </mat-card-header>
-                    <img
-                      mat-card-image
-                      [src]="myPost.imageUrl"
-                      alt="Photo of a Shiba Inu"
-                    />
+                    <img mat-card-image [src]="myPost.imageUrl" alt="Photo of a Shiba Inu" />
                     <mat-card-content>
                       <p class="mt-3">Topic: {{ myPost.postTopic }}</p>
                       <p class="mt-3">
@@ -103,15 +62,13 @@
                         <!-- <mat-icon *ngIf="!saved">bookmark_border</mat-icon>
                           <mat-icon *ngIf="saved" class="bookFull">bookmark</mat-icon> -->
                       </button>
+                      <button (click)="delPost(myPost.id)"><mat-icon>delete</mat-icon></button>
                     </mat-card-actions>
                   </mat-card>
                 </div>
                 <!-- filtrati -->
                 <div *ngIf="isFiltered">
-                  <mat-card
-                    class="example-card profileCard"
-                    *ngFor="let myPost of filteredPosts"
-                  >
+                  <mat-card class="example-card profileCard" *ngFor="let myPost of filteredPosts">
                     <mat-card-header>
                       <div mat-card-avatar class="header-card-img">
                         <img [src]="myPost.user.profilePic" alt="" />
@@ -119,13 +76,9 @@
                       <mat-card-title>{{ myPost.title }}</mat-card-title>
                       <mat-card-subtitle>{{
                         myPost.user.nickname
-                      }}</mat-card-subtitle>
+                        }}</mat-card-subtitle>
                     </mat-card-header>
-                    <img
-                      mat-card-image
-                      [src]="myPost.imageUrl"
-                      alt="Photo of a Shiba Inu"
-                    />
+                    <img mat-card-image [src]="myPost.imageUrl" alt="Photo of a Shiba Inu" />
                     <mat-card-content>
                       <p class="mt-3">Topic: {{ myPost.postTopic }}</p>
                       <p class="mt-3">
@@ -145,44 +98,8 @@
                 </div>
               </mat-tab>
 
-                <mat-tab label="Saved Posts">
-                  <mat-card
-                    class="example-card profileCard"
-                    *ngFor="let myPost of savedPostArray"
-                  >
-                    <mat-card-header>
-                      <div mat-card-avatar class="header-card-img">
-                        <img [src]="myPost.user.profilePic" alt="" />
-                      </div>
-                      <mat-card-title>{{ myPost.title }}</mat-card-title>
-                      <mat-card-subtitle>{{
-                        myPost.user.nickname
-                      }}</mat-card-subtitle>
-                    </mat-card-header>
-                    <img
-                      mat-card-image
-                      [src]="myPost.imageUrl"
-                      alt="Photo of a Shiba Inu"
-                    />
-                    <mat-card-content>
-                      <p class="mt-3">Topic: {{ myPost.postTopic }}</p>
-                      <p class="mt-3">
-                        {{ myPost.bodyText }}
-                      </p>
-                    </mat-card-content>
-                    <mat-card-actions class="d-flex justify-content-end">
-                      <button class="save" (click)="saved(myPost)" mat-button>
-                        <mat-icon class="bookFull">bookmark</mat-icon>
-                      </button>
-                    </mat-card-actions>
-                  </mat-card>
-                </mat-tab>
-
-              <mat-tab label="Liked Posts">
-                <mat-card
-                  class="example-card profileCard"
-                  *ngFor="let myPost of likedPosts"
-                >
+              <mat-tab label="Saved Posts">
+                <mat-card class="example-card profileCard" *ngFor="let myPost of savedPostArray">
                   <mat-card-header>
                     <div mat-card-avatar class="header-card-img">
                       <img [src]="myPost.user.profilePic" alt="" />
@@ -190,13 +107,35 @@
                     <mat-card-title>{{ myPost.title }}</mat-card-title>
                     <mat-card-subtitle>{{
                       myPost.user.nickname
-                    }}</mat-card-subtitle>
+                      }}</mat-card-subtitle>
                   </mat-card-header>
-                  <img
-                    mat-card-image
-                    [src]="myPost.imageUrl"
-                    alt="Photo of a Shiba Inu"
-                  />
+                  <img mat-card-image [src]="myPost.imageUrl" alt="Photo of a Shiba Inu" />
+                  <mat-card-content>
+                    <p class="mt-3">Topic: {{ myPost.postTopic }}</p>
+                    <p class="mt-3">
+                      {{ myPost.bodyText }}
+                    </p>
+                  </mat-card-content>
+                  <mat-card-actions class="d-flex justify-content-end">
+                    <button class="save" (click)="saved(myPost)" mat-button>
+                      <mat-icon class="bookFull">bookmark</mat-icon>
+                    </button>
+                  </mat-card-actions>
+                </mat-card>
+              </mat-tab>
+
+              <mat-tab label="Liked Posts">
+                <mat-card class="example-card profileCard" *ngFor="let myPost of likedPosts">
+                  <mat-card-header>
+                    <div mat-card-avatar class="header-card-img">
+                      <img [src]="myPost.user.profilePic" alt="" />
+                    </div>
+                    <mat-card-title>{{ myPost.title }}</mat-card-title>
+                    <mat-card-subtitle>{{
+                      myPost.user.nickname
+                      }}</mat-card-subtitle>
+                  </mat-card-header>
+                  <img mat-card-image [src]="myPost.imageUrl" alt="Photo of a Shiba Inu" />
                   <mat-card-content>
                     <p class="mt-3">Topic: {{ myPost.postTopic }}</p>
                     <p class="mt-3">

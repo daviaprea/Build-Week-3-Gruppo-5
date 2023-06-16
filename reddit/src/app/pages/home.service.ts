@@ -43,8 +43,8 @@ export class HomeService {
     return this.http.put(environment.postsUrl + '/' + post.id, post);
   }
 
-  deletePost(id:number){
-    return this.http.delete(environment.postsUrl + '/' + id);
+  deletePost(id:string){
+    return this.http.delete(environment.editPost+id+'.json');
   }
 
   likePost(post:IPost)
