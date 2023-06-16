@@ -3,17 +3,22 @@ mat-drawer-container{
   mat-tab-body{
     display: flex;
     justify-content: center;
-    mat-card{
-      width: 600px;
-      mat-card-header{
-        display: flex;
-        align-items: center;
-        padding: 8px;
-        div.header-card-img{
-          img{
-            border-radius: 50%;
-            width: 50px;
-          }
+  }
+}
+
+mat-drawer-content {
+  margin: 0;
+  .profileCard {
+    margin: 10px 20px 10px 342.5px;
+    width: 750px;
+    mat-card-header {
+      display: flex;
+      align-items: center;
+      padding: 8px;
+      div.header-card-img {
+        img {
+          border-radius: 50%;
+          width: 50px;
         }
       }
     }

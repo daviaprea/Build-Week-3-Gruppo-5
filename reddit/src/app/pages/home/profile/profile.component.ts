@@ -98,10 +98,8 @@ export class ProfileComponent implements OnInit, OnDestroy {
           obj.id=post;
           this.likedPosts.push(obj);
         }
-        console.log('Post recuperati', this.likedPosts);
+        console.log('Recupero post piaciuti', this.likedPosts);
         this.likedPosts = this.likedPosts.filter(post => post.likes.hasOwnProperty(this.userLogged!.uniqueId));
-        console.log('Post recuperati', this.likedPosts);
-
 
       },
       (error) => {
@@ -121,9 +119,8 @@ export class ProfileComponent implements OnInit, OnDestroy {
           obj.id=post;
           this.savedPostArray.push(obj);
         }
-        console.log('Post recuperati', this.savedPostArray);
+        console.log('Recupero post salvati', this.savedPostArray);
         this.savedPostArray = this.savedPostArray.filter(post => post.saved.hasOwnProperty(this.userLogged!.uniqueId));
-        console.log('Post recuperati', this.savedPostArray);
 
 
       },
@@ -140,7 +137,8 @@ export class ProfileComponent implements OnInit, OnDestroy {
       delete post.likes[user.uniqueId]
       this.getAllLikedPosts();
     }
-    else {post.likes[user.uniqueId]=user
+    else {
+      post.likes[user.uniqueId]=user
       this.getAllLikedPosts();
     }
     this.likesSubscription = this.homeSvc.likePost(post).subscribe(res=>console.log(res));

@@ -1,9 +1,9 @@
-<mat-card class="example-card">
+<mat-card class="example-card profileBox">
   <mat-card-header>
+    <a class="btn btn-primary newPost" [routerLink]="['create']">New post</a>
     <mat-card-title-group>
       <mat-card-title>{{loggedUser.nickname}}</mat-card-title>
       <mat-card-subtitle>ID: #{{loggedUser.id}}</mat-card-subtitle>
-      <a class="btn btn-primary h-50" [routerLink]="['create']">New post</a>
       <img mat-card-md-image [src]=loggedUser.profilePic  alt="Profile Image">
     </mat-card-title-group>
   </mat-card-header>
