@@ -6,6 +6,8 @@ import { HomeService } from '../../home.service';
 import { IPost } from 'src/app/models/interfaces/i-post';
 import { IRegister } from 'src/app/models/interfaces/i-register';
 import { Subscription, take } from 'rxjs';
+import { Icomment } from 'src/app/models/interfaces/icomment';
+import { IPostPlusComments } from 'src/app/models/interfaces/ipost-plus-comments';
 
 @Component({
   selector: 'app-profile',
@@ -25,6 +27,10 @@ export class ProfileComponent implements OnInit, OnDestroy {
   savedPostArray: IPost[] = [];
 
   isFiltered: boolean = false;
+  allComments: [string, Icomment][] = [];
+  //creo un array di oggetti, ogni oggetto contiene l'oggetto post + relativi commenti
+  postCommentedArray: IPostPlusComments[] = [];
+  postCommented!: IPostPlusComments;
 
   likesSubscription: Subscription | undefined;
   saveSubscription: Subscription | undefined;
