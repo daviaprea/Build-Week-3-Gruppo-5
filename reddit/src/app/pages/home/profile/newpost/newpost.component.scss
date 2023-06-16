@@ -1,0 +1,9 @@
+.formContainer{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100%;
+  .newPostForm{
+    height: 400px;
+  }
+}

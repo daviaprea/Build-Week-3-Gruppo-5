@@ -5,6 +5,7 @@ import { IPost } from 'src/app/models/interfaces/i-post';
 import { HomeService } from 'src/app/pages/home.service';
 import { IRegister } from 'src/app/models/interfaces/i-register';
 import { Subscription } from 'rxjs';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-newpost',
@@ -46,7 +47,8 @@ export class NewpostComponent implements OnInit, OnDestroy {
   constructor(
     private fb: FormBuilder,
     private profileSvc: ProfileService,
-    private homeSvc: HomeService
+    private homeSvc: HomeService,
+    private router: Router
   ){}
 
   ngOnDestroy(): void {
@@ -80,8 +82,9 @@ export class NewpostComponent implements OnInit, OnDestroy {
     console.log(this.newPost);
 
     this.create=this.profileSvc.create(this.newPost).subscribe(res => {
-      console.log(res);
+      this.router.navigate(['/profile']);
     })
+
   }
 
   onFileSelected(event: any) {
