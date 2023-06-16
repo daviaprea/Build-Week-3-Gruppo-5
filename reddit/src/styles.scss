@@ -52,16 +52,9 @@ body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; height: 100
     color: #fff;
   }
   .commentForm{
-    background-color: rgb(67, 67, 67);;
+    background-color: rgb(67, 67, 67);
     .commentText{
       border: 2px solid white !important;
-    }
-    .commentBtn{
-      color: white;
-      background-color: #f44a3e !important;
-    }
-    .hide{
-      background-color: #1a1a1a;
     }
   }
   .formContainer{
@@ -71,6 +64,17 @@ body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; height: 100
       .createBtn{
         background: #f44a3e;
       }
+    }
+  }
+  .commentBtn{
+    color: white;
+    background-color: #f44a3e !important;
+  }
+  .comment-section{
+    .commentCard{
+      border: 2px solid rgb(135, 134, 134);
+      border-radius: 10px;
+      background-color: rgb(67, 67, 67);
     }
   }
 }

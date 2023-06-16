@@ -68,7 +68,7 @@
           <button [disabled]="!formRegister.valid" class="btn btn-warning commentBtn">Comment</button>
         </form>
         <div class="comment-section" #collapse="ngbCollapse" [(ngbCollapse)]="!post.isCollapsed">
-          <div class="card p-2" *ngFor="let property of post.comments | keyvalue">
+          <div class="commentCard p-2" *ngFor="let property of post.comments | keyvalue">
             <div class="commentTitle d-flex align-items-center gap-4">
               <div mat-card-avatar class="header-card-img"><img class="commentPic" [src]="property.value?.createdBy?.profilePic" alt=""></div>
               <div class="fw-bold">{{property.value?.createdBy?.nickname}}</div>
