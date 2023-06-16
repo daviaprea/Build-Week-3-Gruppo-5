@@ -1,4 +1,5 @@
 import { IRegister } from "./i-register";
+import { Icomment } from "./icomment";
 
 export interface IPost {
   id: string;
@@ -10,5 +11,6 @@ export interface IPost {
   postTopic:string;
   likes: {[key: string]: any};
   saved: {[key: string]: any};
-  user: IRegister
+  comments: {[key: string]: any};
+  user: IRegister;
 }
