@@ -26,9 +26,9 @@ export class HomeService {
     return this.http.get<IPost>(environment.postsUrl + '/' + id);
   }
 
-  newComment(comment:Icomment)
+  newComment(post:IPost)
   {
-    return this.http.post(environment.commentsUrl, comment);
+    return this.http.put(environment.editPost+post.id+".json", post);
   }
 
   getAllComment(){

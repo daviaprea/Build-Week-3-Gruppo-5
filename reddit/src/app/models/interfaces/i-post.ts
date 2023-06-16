@@ -1,4 +1,5 @@
 import { IRegister } from "./i-register";
+import { Icomment } from "./icomment";
 
 export interface IPost {
   id: string;
@@ -9,5 +10,6 @@ export interface IPost {
   videoUrl?:string;
   postTopic:string;
   likes: {[key: string]: any};
-  user: IRegister
+  comments: {[key: string]: any};
+  user: IRegister;
 }

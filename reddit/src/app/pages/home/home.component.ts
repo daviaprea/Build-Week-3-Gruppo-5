@@ -77,7 +77,7 @@ export class HomeComponent implements OnInit, OnDestroy {
     );
   }
 
-  addComment(post:IPost) {
+  /* addComment(post:IPost) {
     let newComment: Icomment = {
       createdBy: this.userLogged!,
       body: this.formRegister.value.comment,
@@ -91,43 +91,36 @@ export class HomeComponent implements OnInit, OnDestroy {
         this.allComments=[];
         let arr=Object.entries(data);
         this.allComments = arr.filter(comment => post.id==comment[1].post_id);
-        /* for(let comment in data) if(comment.post_id == post.id) this.allComments.push(comment); */
+        for(let comment in data) if(comment.post_id == post.id) this.allComments.push(comment);
         console.log(this.allComments);
       });
     });
+  } */
+
+  addComment(post:IPost) {
+    let newComment: Icomment = {
+      createdBy: this.userLogged!,
+      body: this.formRegister.value.comment,
+      post_id: post.id
+    }
+
+    post.comments[String(new Date().getTime())+newComment.createdBy.uniqueId]=newComment;
+    console.log(post);
+    console.log(newComment);
+    this.homeSvc.newComment(post).subscribe(res => {
+      this.formRegister.reset();
+      console.log(res);
+      /* this.homeSvc.getAllComment().subscribe(data=>{
+        this.allComments=[];
+        let arr=Object.entries(data);
+        this.allComments = arr.filter(comment => post.id==comment[1].post_id);
+        for(let comment in data) if(comment.post_id == post.id) this.allComments.push(comment);
+        console.log(this.allComments);
+      }); */
+    });
   }
 
-  /*getAllComments() {//poi la richiamo dentro getAllPostsHome
-    //array con tutti gli id dei post
-    const allPostId: string[] = this.allDisplayablePosts.map((post) => post.id);
-    //prendo tutti i commenti (dopo la risposta della chiamata)
-    this.commentsSubscription = this.homeSvc.getAllComment().subscribe(
-      (comments) => {
-        //filtro i commenti che corrispondono agli id dei post
-        const commentsArr = Array.from(comments)
-        this.allComments = commentsArr.filter(comment => allPostId.includes(comment.post_id));
-        //itero sui post e sui commenti per creare un oggetto unione dei due
-        for (const post of this.allDisplayablePosts) {
-          for (const comment of this.allComments) {
-            if (comment.createdBy.id === post.id) {
-              //compilo l'oggetto combinato
-              this.postCommented = {
-                post: post,
-                comments: [comment]
-              }
-              this.postCommentedArray.push(this.postCommented);
-              console.log(this.postCommented)
-            }
-          }
-        }
-      },
-      (error) => {
-        console.log('errore nel recuperare i commenti', error);
-      }
-    )
-  }*/
-
-  like(post: IPost) {
+  like(post: IPost){
     let user: IRegister = JSON.parse(localStorage.getItem("userInfos")!);
     if (post.likes.hasOwnProperty(user.uniqueId)) delete post.likes[user.uniqueId];
     else post.likes[user.uniqueId] = user;
@@ -147,45 +140,3 @@ export class HomeComponent implements OnInit, OnDestroy {
     }
   }
 }
-
-/*
-getAllComments(){//poi la richiamo dentro getAllPostsHome
-  const allPostId: string[] = [];
-  this.allDisplayablePosts.forEach((post) => {
-    allPostId.push(post.id)
-  })
-  const allPostId: string[] = this.allDisplayablePosts.map(post => post.id);
-  this.homeSvc.getAllComment().subscribe(
-    (comments) => {
-      comments.forEach((comment) => {
-        let commentFound = <Icomment>comments.find((comment) => {
-          return allPostId.includes(comment.createdBy_id);
-        });
-        this.allComments.push(commentFound)
-      })
-      this.allComments = comments.filter(comment => allPostId.includes(comment.createdBy_id));
-    })
-
-  allPostId.forEach((idPost) => {
-    this.homeSvc.getAllComment().subscribe(
-      (comments) => {
-        this.allComments = comments;
-        console.log("getAllComment", comments)
-      },
-      (error) => {
-        console.log('errore nel recuperare i commenti', error);
-      }
-    )
-  })
-  for (const post of this.allDisplayablePosts) {
-    for (const comment of this.allComments) {
-      if (comment.createdBy_id === post.id) {
-        this.postCommented = {
-          post: post,
-          comments: [comment]
-        }
-        this.postCommentedArray.push(this.postCommented);
-      }
-    }
-  }
-} */

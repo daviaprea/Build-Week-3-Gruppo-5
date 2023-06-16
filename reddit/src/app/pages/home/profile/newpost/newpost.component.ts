@@ -35,6 +35,7 @@ export class NewpostComponent implements OnInit, OnDestroy {
     imageUrl: '',
     videoUrl: '',
     likes: {"start":0},
+    comments: {"start": 0},
     id: '',
     user: this.userParsed
   }
