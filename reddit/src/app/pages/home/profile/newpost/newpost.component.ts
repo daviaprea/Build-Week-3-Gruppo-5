@@ -34,12 +34,13 @@ export class NewpostComponent implements OnInit, OnDestroy {
     postTopic: '',
     imageUrl: '',
     videoUrl: '',
-    likes: {"start":0},
-    saved: {"start":0},
-    comments: {"start": 0},
+    likes: { "start": 0 },
+    saved: { "start": 0 },
+    comments: { "start": 0 },
     id: '',
     user: this.userParsed,
-    isCollapsed:true
+    isCollapsed: true,
+    postDate: ''
   }
 
   constructor(
@@ -75,6 +76,7 @@ export class NewpostComponent implements OnInit, OnDestroy {
     this.newPost.postTopic = this.formRegister.value.topic;
     this.newPost.bodyText = this.formRegister.value.body;
     this.newPost.imageUrl = this.base64Image;
+    this.newPost.postDate=new Date().toLocaleString();
     console.log(this.newPost);
 
     this.create=this.profileSvc.create(this.newPost).subscribe(res => {

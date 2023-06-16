@@ -5,4 +5,5 @@ export interface Icomment {
   createdBy: IRegister;
   body: string;
   post_id: string;
+  commentDate:string;
 }

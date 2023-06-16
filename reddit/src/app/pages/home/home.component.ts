@@ -105,7 +105,8 @@ export class HomeComponent implements OnInit, OnDestroy {
     let newComment: Icomment = {
       createdBy: this.userLogged!,
       body: this.formRegister.value.comment,
-      post_id: post.id
+      post_id: post.id,
+      commentDate: new Date().toLocaleString()
     }
 
     post.comments[String(new Date().getTime())+newComment.createdBy.uniqueId]=newComment;
@@ -143,5 +144,5 @@ export class HomeComponent implements OnInit, OnDestroy {
     return Object.keys(post.likes).length-1;
   }
 
- 
+
 }

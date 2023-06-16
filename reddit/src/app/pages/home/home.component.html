@@ -37,6 +37,7 @@
           <div mat-card-avatar class="header-card-img"><img [src]="post.user.profilePic" alt=""></div>
           <mat-card-title>{{post.title}}</mat-card-title>
           <mat-card-subtitle>{{post.user.nickname}}</mat-card-subtitle>
+          <p>{{post.postDate}}</p>
         </mat-card-header>
         <img mat-card-image [src]="post.imageUrl" alt="">
         <mat-card-content>
@@ -64,13 +65,14 @@
             <mat-label class="commentLabel">Comment</mat-label>
             <input color="white" class="commentText" type="text" matInput formControlName="comment">
           </mat-form-field>
-          <button class="btn btn-warning commentBtn">Comment</button>
+          <button [disabled]="!formRegister.valid" class="btn btn-warning commentBtn">Comment</button>
         </form>
         <div class="comment-section" #collapse="ngbCollapse" [(ngbCollapse)]="!post.isCollapsed">
           <div class="card p-2" *ngFor="let property of post.comments | keyvalue">
             <div class="commentTitle d-flex align-items-center gap-4">
               <div mat-card-avatar class="header-card-img"><img class="commentPic" [src]="property.value?.createdBy?.profilePic" alt=""></div>
               <div class="fw-bold">{{property.value?.createdBy?.nickname}}</div>
+              <div class="card-body">{{property.value?.commentDate}}</div>
             </div>
             <div class="card-body">{{property.value?.body}}</div>
           </div>
